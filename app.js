@@ -8,7 +8,7 @@ var app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
 for (const routePath in routes) {
@@ -19,7 +19,7 @@ for (const routePath in routes) {
     }
 }
 
-app.use(function(req, res, next){
+app.use(function (req, res, next) {
     res.status(404).send({
         error: 'Page not found'
     });

@@ -1,7 +1,6 @@
-
 module.exports = {
-  '/api': [
-    require('./api/event'),
-    require('./api/test'),
-  ]
+    '/api': [
+        require('./api/event'),
+        require('./api/test'),
+    ]
 };
