@@ -26,6 +26,12 @@ CREATE TABLE events (
   backend_port Int16,
   backend_host_name String,
 
+  consumer_name String,
+  consumer_pid Int16,
+  consumer_ip FixedString(16),
+  consumer_port Int16,
+  consumer_host_name String,
+
   event_type Enum8(
     'backend' = 0,
     'frontend' = 1,
