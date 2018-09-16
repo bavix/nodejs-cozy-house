@@ -9,15 +9,15 @@ CREATE TABLE events (
     'options' = 6
   )),
   request_bot Int8 DEFAULT 0,
-  request_language String DEFAULT '',
+  request_language Nullable(String),
   request_secure UInt8 DEFAULT 0,
   request_post UInt8 DEFAULT 0,
   request_ajax UInt8 DEFAULT 0,
-  request_route String DEFAULT '',
-  request_domain String DEFAULT '',
-  request_url String DEFAULT '',
+  request_route Nullable(String),
+  request_domain Nullable(String),
+  request_url Nullable(String),
   request_ip FixedString(16),
-  request_user_agent String DEFAULT '',
+  request_user_agent Nullable(String),
   request_duration Int32 DEFAULT 0,
 
   backend_name String,
@@ -74,14 +74,14 @@ CREATE TABLE events (
     'linux' = 2
   )),
 
-  google_client_id String DEFAULT '',
-  gclid String DEFAULT '',
+  google_client_id Nullable(String),
+  gclid Nullable(String),
 
-  ym_client_id String DEFAULT '',
-  ymclid String DEFAULT '',
-  yclid String DEFAULT '',
+  ym_client_id Nullable(String),
+  ymclid Nullable(String),
+  yclid Nullable(String),
 
-  ef_id String DEFAULT '',
+  ef_id Nullable(String),
 
   referrer_channel Nullable(Enum8(
     'direct' = 0,
@@ -91,14 +91,14 @@ CREATE TABLE events (
     'internal' = 4,
     'search' = 5
   )),
-  referrer_domain String DEFAULT '',
-  referrer String DEFAULT '',
+  referrer_domain Nullable(String),
+  referrer Nullable(String),
 
-  utm_source String DEFAULT '',
-  utm_medium String DEFAULT '',
-  utm_term String DEFAULT '',
-  utm_content String DEFAULT '',
-  utm_campaign String DEFAULT '',
+  utm_source Nullable(String),
+  utm_medium Nullable(String),
+  utm_term Nullable(String),
+  utm_content Nullable(String),
+  utm_campaign Nullable(String),
 
   created_date Date,
   created_time DateTime
