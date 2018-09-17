@@ -22,7 +22,8 @@ CREATE TABLE events (
 
   recipient_request_seconds Int64,
   recipient_request_nanoseconds Int32,
-  recipient_host_name String,
+  recipient_os_hostname String,
+  recipient_hostname String,
   recipient_ip FixedString(16),
   recipient_port Int16,
   recipient_platform String,
@@ -47,7 +48,8 @@ CREATE TABLE events (
 
   consumer_request_seconds Int64,
   consumer_request_nanoseconds Int32,
-  consumer_host_name String,
+  consumer_os_hostname String,
+  consumer_hostname String,
   consumer_ip FixedString(16),
   consumer_port Int16,
   consumer_platform String,
