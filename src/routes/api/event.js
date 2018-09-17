@@ -13,6 +13,7 @@ router.get('/event', function (req, res, next) {
     console.log(process.hrtime());
     console.log(process.uptime());
     console.log(process.version);
+    console.log(res);
     res.send({
         status: 'ok',
         rand: Math.random(),
