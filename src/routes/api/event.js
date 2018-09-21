@@ -9,7 +9,7 @@ router.get('/event', function (req, res, next) {
     event.recipient();
     // event.queue();
 
-    console.log(event);
+    console.log(event.toArray());
 
     res.send({
         status: 'ok',

@@ -8,7 +8,6 @@ CREATE TABLE events (
     'head' = 5,
     'options' = 6
   )),
-  request_bot Int8 DEFAULT 0,
   request_language Nullable(String),
   request_secure UInt8 DEFAULT 0,
   request_ajax UInt8 DEFAULT 0,
@@ -16,6 +15,7 @@ CREATE TABLE events (
   request_domain Nullable(String),
   request_url Nullable(String),
   request_ip FixedString(16),
+  request_bot Int8 DEFAULT 0,
   request_user_agent Nullable(String),
   request_duration Int32 DEFAULT 0,
   request_sid Nullable(String),
@@ -91,8 +91,9 @@ CREATE TABLE events (
   platform_product Nullable(String),
   platform_manufacturer Nullable(String),
   platform_layout Nullable(String),
-  platform_os Nullable(String),
-  platform_description Nullable(String),
+  platform_os_arch Nullable(String),
+  platform_os_family Nullable(String),
+  platform_os_version Nullable(String),
 
   visitor_webp Int8 DEFAULT 0,
   visitor_user_id Nullable(Int32),
