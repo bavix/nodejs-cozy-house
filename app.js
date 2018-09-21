@@ -12,6 +12,11 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(session({
+    secret: '5Q#v@:b7KT3-+b]>',
+    saveUninitialized: true,
+    resave: false,
+}));
 
 for (const routePath in routes) {
     if (routes.hasOwnProperty(routePath)) {

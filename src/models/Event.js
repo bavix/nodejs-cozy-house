@@ -43,10 +43,12 @@ class Event {
     }
 
     recipient() {
-        this.request_ajax = this._req.xhr;
+        this.request_language = this._req.acceptsLanguages().shift();
+        this.request_sid = this._req.session.id;
+        this.request_secure = this._req.secure;
         this.request_method = this._req.method;
+        this.request_ajax = this._req.xhr;
         this.request_ip = this._req.ip;
-        this.request_sid = this._req.sessionID;
 
         const machine = this._machine();
         for (const [key, value] of machine) {
