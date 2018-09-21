@@ -72,33 +72,17 @@ CREATE TABLE events (
   consumer_ppid Int16,
   consumer_pid Int16,
 
-  event_type Enum8(
-    'backend' = 0,
-    'frontend' = 1,
+  event_device Enum8(
+    'server' = 0,
+    'browser' = 1,
     'ios' = 2,
     'android' = 3
   ),
-  event_name Nullable(Enum8(
-    'request' = 0,
-    'modal' = 1,
-    'click' = 2,
-    'close' = 3,
-    'load' = 4,
-    'progress' = 5,
-    'create' = 6,
-    'read' = 7,
-    'update' = 8,
-    'delete' = 9,
-    'success' = 10,
-    'error' = 11,
-    'pageview' = 12,
-    'identify' = 13,
-    'upload' = 14,
-    'download' = 15,
-    'alert' = 16
-  )),
-  event_segment String,
-  event_segment_json String,
+  event_category String,
+  event_action String,
+  event_label Nullable(String),
+  event_value Nullable(Int32),
+  event_json Nullable(String),
 
   page_load_time Int16 DEFAULT 0,
 
