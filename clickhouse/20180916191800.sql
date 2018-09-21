@@ -85,24 +85,30 @@ CREATE TABLE events (
   event_json Nullable(String),
 
   page_load_time Int16 DEFAULT 0,
+  
+  platform_name Nullable(String),
+  platform_version Nullable(String),
+  platform_product Nullable(String),
+  platform_manufacturer Nullable(String),
+  platform_layout Nullable(String),
+  platform_os Nullable(String),
+  platform_description Nullable(String),
 
   visitor_webp Int8 DEFAULT 0,
-  visitor_user_id Int32 DEFAULT 0,
+  visitor_user_id Nullable(Int32),
   visitor_uuid Nullable(FixedString(16)),
-  visitor_browser_width Int16 DEFAULT 0,
-  visitor_browser_height Int16 DEFAULT 0,
-  visitor_device_width Int16 DEFAULT 0,
-  visitor_device_height Int16 DEFAULT 0,
+  visitor_browser_width Nullable(Int16),
+  visitor_browser_height Nullable(Int16),
+  visitor_device_width Nullable(Int16),
+  visitor_device_height Nullable(Int16),
   visitor_device Nullable(Enum8(
     'desktop' = 0,
     'mobile' = 1,
     'tablet' = 2
   )),
-
-  visitor_device_os Nullable(Enum8(
-    'windows' = 0,
-    'macos' = 1,
-    'linux' = 2
+  visitor_device_orientation Nullable(Enum8(
+    'landscape' = 0,
+    'portrait' = 1
   )),
 
   google_client_id Nullable(String),
