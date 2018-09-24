@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+// load env
+require('dotenv').load();
+
 var amqp = require('amqplib');
 
 function amqpDisconnect(conn) {
@@ -9,7 +12,9 @@ function amqpDisconnect(conn) {
     conn.close(() => process.exit(1));
 }
 
-amqp.connect(config.url).then(function(conn) {
+const store = [];
+console.log(process.env.QUEUE_URL);
+amqp.connect(process.env.QUEUE_URL).then(function(conn) {
 
     process.once('SIGTERM', () => amqpDisconnect(conn));
     process.once('SIGINT', () => amqpDisconnect(conn));
@@ -28,18 +33,21 @@ amqp.connect(config.url).then(function(conn) {
         });
 
         function doWork(msg) {
-            console.log(process.platform);
-            console.log(process.arch);
-            console.log(process.title);
-            console.log(process.ppid);
-            console.log(process.pid);
-            console.log(process.getuid());
-            console.log(process.getgid());
-            console.log(process.hrtime());
-            console.log(process.uptime());
-            console.log(process.version);
+            // console.log(process.platform);
+            // console.log(process.arch);
+            // console.log(process.title);
+            // console.log(process.ppid);
+            // console.log(process.pid);
+            // console.log(process.getuid());
+            // console.log(process.getgid());
+            // console.log(process.hrtime());
+            // console.log(process.uptime());
+            // console.log(process.version);
             const body = msg.content.toString();
             console.log(" [x] Received '%s'", body);
+
+            store.push(body);
+            console.log(store);
 
             const secs = body.split('.').length - 1;
             console.log(" [x] Task takes %d seconds", secs);

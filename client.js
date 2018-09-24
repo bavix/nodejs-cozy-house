@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 
+// load env
+require('dotenv').load();
+
 var amqp = require('amqplib');
 
-amqp.connect(config.url, {
+amqp.connect(process.env.QUEUE_URL, {
     timeout: 50
 }).then(function(conn) {
     return conn.createChannel().then(function(ch) {
