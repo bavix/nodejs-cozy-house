@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var amqp = require('amqplib');
-const config = require('./config/amqp');
 
 amqp.connect(config.url, {
     timeout: 50

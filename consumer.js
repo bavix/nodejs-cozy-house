@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var amqp = require('amqplib');
-const config = require('./config/amqp');
 
 function amqpDisconnect(conn) {
     console.log('write data to clickhouse');

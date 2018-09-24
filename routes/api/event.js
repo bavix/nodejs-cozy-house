@@ -8,6 +8,7 @@ router.post('/event', function (req, res, next) {
     event.recipient();
     // event.queue();
 
+    console.log(req.body);
     console.log(event.toArray());
 
     res.status(201).send({
