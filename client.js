@@ -5,8 +5,6 @@ var amqp = require('amqplib');
 amqp.connect(config.url, {
     timeout: 50
 }).then(function(conn) {
-    process.once('SIGINT', () => conn.close());
-
     return conn.createChannel().then(function(ch) {
         var ok = ch.assertQueue('task_queue', {durable: true});
         var msg = 'Hello World';
