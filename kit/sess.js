@@ -39,15 +39,15 @@ class Session {
         ]);
 
         // sessions
-        this.phpsessid = cookie([PHP_SESSION_ID]);
-        this.nodesessid = cookie([NODE_SESSION_ID]);
-        this.javasessid = cookie([JAVA_SESSION_ID]);
-        this.aspsessid = cookie([ASP_SESSION_ID]);
+        this.phpsessid = Cookie.get(PHP_SESSION_ID);
+        this.nodesessid = Cookie.get(NODE_SESSION_ID);
+        this.javasessid = Cookie.get(JAVA_SESSION_ID);
+        this.aspsessid = Cookie.get(ASP_SESSION_ID);
 
         // yandex uid
-        this.ym_uid = cookie([YM_UID]);
-        this.ga = cookie([GA]);
-        this.gid = cookie([GID]);
+        this.ym_uid = Cookie.get(YM_UID);
+        this.ga = Cookie.get(GA);
+        this.gid = Cookie.get(GID);
 
         // local uuid (analytics)
         this.uuid = cookie([STUDY_UUID], (name) => {
