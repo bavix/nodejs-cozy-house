@@ -44,7 +44,7 @@ class Event {
 
     recipient() {
         this.request_language = this._req.acceptsLanguages().shift();
-        this.request_sid = this._req.session.id;
+        // this.request_sid = this._req.session.id;
         this.request_secure = this._req.secure;
         this.request_method = this._req.method;
         this.request_ajax = this._req.xhr;
