@@ -65,8 +65,8 @@ class Event {
         }
     }
 
-    toArray() {
-        let results = [];
+    toObject() {
+        let results = {};
 
         for (const [entry, value] of Object.entries(this)) {
             if (entry.indexOf('_') !== 0) {

@@ -1,12 +1,12 @@
 CREATE TABLE events (
   request_method Nullable(Enum8(
-    'get' = 0,
-    'post' = 1,
-    'put' = 2,
-    'patch' = 3,
-    'delete' = 4,
-    'head' = 5,
-    'options' = 6
+    'GET' = 0,
+    'POST' = 1,
+    'PUT' = 2,
+    'PATCH' = 3,
+    'DELETE' = 4,
+    'HEAD' = 5,
+    'OPTIONS' = 6
   )),
   request_language Nullable(String),
   request_secure UInt8 DEFAULT 0,
