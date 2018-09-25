@@ -1,31 +1,38 @@
-const os = require('os');
-const amqp = require('amqplib');
+
 const term = require('./signals/term');
 const hup = require('./signals/hup');
-const queue = amqp.connect(process.env.QUEUE_URL);
+const amqp = require('amqplib');
 
-queue.then((conn) => {
+module.exports = (route, consume) => {
 
-    const terminate = term(conn);
-    const hangUp = hup(conn);
+    return amqp.connect(process.env.QUEUE_URL).then((conn) => {
 
-    // signals
-    process.once('SIGTERM', terminate);
-    process.once('SIGINT', terminate);
-    process.once('SIGHUP', hangUp);
+        const terminate = term(conn);
+        const hangUp = hup(conn);
 
-    return conn.createChannel().then(function (ch) {
+        // signals
+        process.once('SIGTERM', terminate);
+        process.once('SIGINT', terminate);
+        process.once('SIGHUP', hangUp);
 
-        var queue = ch.assertQueue(process.env.QUEUE_NAME, {durable: true});
+        return conn.createChannel().then(function (ch) {
 
-        queue = queue.then(function () {
-            ch.prefetch(1);
-        });
+            const queue = ch.assertQueue(route, {durable: true});
 
-        // todo
+            queue.then(() => {
+                ch.prefetch(1);
+            });
 
-    }).catch(terminate);
+            return queue.then(() => {
+                ch.consume(route, function() {
+                    return consume.call(ch, queue, ...arguments);
+                }, {
+                    noAck: false
+                })
+            });
 
-});
+        }).catch(terminate);
 
-module.exports = queue;
+    });
+
+};

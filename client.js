@@ -3,20 +3,7 @@
 // load env
 require('dotenv').load();
 
-var amqp = require('amqplib');
+const dispatch = require('./queue/dispatch');
+const routes = require('./queue/routes');
 
-amqp.connect(process.env.QUEUE_URL, {
-    timeout: 50
-}).then(function(conn) {
-    return conn.createChannel().then(function(ch) {
-        var ok = ch.assertQueue('task_queue', {durable: true});
-        var msg = 'Hello World';
-
-        return ok.then(() => {
-            ch.sendToQueue('task_queue', Buffer.from(msg), {deliveryMode: true});
-            console.log(" [x] Sent '%s'", msg);
-            return ch.close();
-        });
-
-    }).finally(() => conn.close());
-});
+dispatch(routes.enqueue, [1,2,{a:1}]);

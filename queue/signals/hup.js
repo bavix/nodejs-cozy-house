@@ -7,11 +7,7 @@ const ch = new ClickHouse({
 });
 
 module.exports = (conn) => {
-
-    /**
-     * тут должна быть запись в clickhouse
-     */
-
-    console.log(ch)
-
+    return () => {
+        conn.close(() => process.exit(1));
+    }
 };
