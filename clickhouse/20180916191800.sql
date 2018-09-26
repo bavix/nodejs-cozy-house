@@ -7,8 +7,16 @@ CREATE TABLE events (
     'PUT' = 2,
     'PATCH' = 3,
     'DELETE' = 4,
-    'HEAD' = 5,
-    'OPTIONS' = 6
+    'COPY' = 5,
+    'HEAD' = 6,
+    'OPTIONS' = 7,
+    'LINK' = 8,
+    'UNLINK' = 9,
+    'PURGE' = 10,
+    'LOCK' = 11,
+    'UNLOCK' = 12,
+    'PROPFIND' = 13,
+    'VIEW' = 14
   )),
   request_language Nullable(String),
   request_secure UInt8 DEFAULT 0,

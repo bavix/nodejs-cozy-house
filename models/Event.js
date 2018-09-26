@@ -49,6 +49,7 @@ class Event {
         this.request_user_agent = this._req.get('User-Agent');
         this.request_bot = isBot(this.request_user_agent);
 
+        const deny = ['ip', 'user_agent', 'bot'];
         const body = this._req.body;
 
         this.google_client_id = body.google_client_id || null;
@@ -62,7 +63,9 @@ class Event {
         this.page_load_time = body.page_load_time || Number.MAX_SAFE_INTEGER || 0;
 
         _.forEach(this._req.body.request, (value, key) => {
-            this['request_' + key] = value;
+            if (!deny.includes(key)) {
+                this['request_' + key] = value;
+            }
         });
     }
 
