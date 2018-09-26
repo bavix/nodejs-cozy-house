@@ -8,17 +8,20 @@ const { enqueue } = require('../../consts/routes');
 var Referer = require('referer-parser');
 
 /* POST event listing. */
-router.post('/event', function (req, res, next) {
+router.post('/event', async function (req, res, next) {
 
     const entity = new Event(req, res);
     entity.recipient();
-    // entity.queue();
 
     // write to queue
-    dispatch(enqueue, entity.toObject());
-
-    res.status(201).send({
-        status: 'ok'
+    await dispatch(enqueue, entity).then((res) => {
+        res.status(202).send({
+            message: 'Accepted'
+        });
+    }).catch((err) => {
+        res.status(504).send({
+            message: 'Gateway Timeout'
+        });
     });
 
 });

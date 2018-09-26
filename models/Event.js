@@ -143,6 +143,10 @@ class Event {
         })));
     }
 
+    toString() {
+        return JSON.stringify(this.toObject());
+    }
+
     _machine() {
         return Object.entries(
             new Machine(this._req, this._res)
