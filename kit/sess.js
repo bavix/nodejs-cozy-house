@@ -1,6 +1,6 @@
 
 import Cookie from 'js-cookie';
-import uuid4 from './uuid4'
+import uuid from 'uuid/v4'
 
 // sessions
 const NODE_SESSION_ID = 'connect.sid';
@@ -51,7 +51,7 @@ class Session {
 
         // local uuid (analytics)
         this.uuid = cookie([STUDY_UUID], (name) => {
-            const result = uuid4();
+            const result = uuid();
 
             Cookie.set(name, result, {
                 expires: 365 * 3, // 3 years

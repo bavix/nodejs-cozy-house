@@ -8,9 +8,9 @@ class Machine {
         this.request_seconds = hrTime[0];
         this.request_nanoseconds = hrTime[1];
         this.os_hostname = os.hostname();
-        this.hostname = req.hostname;
+        this.hostname = req ? req.hostname : this.os_hostname;
         this.ip = ip.address();
-        this.port = req.app.settings.port;
+        this.port = req ? req.app.settings.port : process.env.PORT;
         this.platform = os.platform();
         this.arch = os.arch();
         this.uptime = process.uptime();

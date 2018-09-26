@@ -4,9 +4,14 @@
 require('dotenv').load();
 
 const amqp = require('./queue/consume');
-const routes = require('./queue/routes');
+const { enqueue } = require('./consts/routes');
 
-const queue = amqp(routes.enqueue, function (queue, message) {
-    console.log(message.content.toString());
-    this.ack(message); // end
+const EventStore = require('./store/eventStore');
+const store = new EventStore();
+
+const queue = amqp(enqueue, function (queue, message) {
+    if (undefined === message.properties.type) {
+        store.persist(JSON.parse(message.content.toString()));
+        this.ack(message);
+    }
 });

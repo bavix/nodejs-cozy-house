@@ -17,7 +17,6 @@ CREATE TABLE events (
   request_ip FixedString(16),
   request_bot Int8 DEFAULT 0,
   request_user_agent Nullable(String),
-  request_duration Int32 DEFAULT 0,
   request_sid Nullable(String),
 
   recipient_request_seconds Int64,

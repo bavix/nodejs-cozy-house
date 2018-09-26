@@ -4,6 +4,7 @@ const ip = require('ip');
 const Machine = require('./Machine');
 const platform = require('platform');
 const isBot = require('isbot');
+const _ = require('lodash');
 
 class Event {
     constructor(req, res, params) {
@@ -21,12 +22,6 @@ class Event {
     }
 
     platform() {
-        this.request_user_agent = this._req.get('User-Agent');
-
-        if (!this.request_user_agent) {
-            return;
-        }
-
         this.request_bot = isBot(this.request_user_agent);
         const pl = platform.parse(this.request_user_agent);
 
@@ -42,14 +37,29 @@ class Event {
         this.platform_os_version = pl.os.version;
     }
 
-    recipient() {
-        this.request_language = this._req.acceptsLanguages().shift();
-        // this.request_sid = this._req.session.id;
-        this.request_secure = this._req.secure;
+    request() {
         this.request_method = this._req.method;
+        this.request_language = this._req.acceptsLanguages().shift();
+        this.request_secure = this._req.secure;
         this.request_ajax = this._req.xhr;
+        this.request_route = null;
+        this.request_domain = null;
+        this.request_url = null;
         this.request_ip = this._req.ip;
+        this.request_bot = true;
+        this.request_user_agent = this._req.get('User-Agent');
+        this.request_sid = null;
 
+        const body = this._req.body;
+        this.page_load_time = body.page_load_time;
+
+        _.forEach(this._req.body.request, (value, key) => {
+            this['request_' + key] = value;
+        });
+    }
+
+    recipient() {
+        this.request();
         const machine = this._machine();
         for (const [key, value] of machine) {
             this['recipient_' + key] = value;
@@ -65,16 +75,14 @@ class Event {
         }
     }
 
+    entries() {
+        return Object.entries(this);
+    }
+
     toObject() {
-        let results = {};
-
-        for (const [entry, value] of Object.entries(this)) {
-            if (entry.indexOf('_') !== 0) {
-                results[entry] = value;
-            }
-        }
-
-        return results;
+        return _.zipObject(..._.unzip(_.filter(this.entries(), ([entry]) => {
+            return entry.indexOf('_') !== 0;
+        })));
     }
 
     _machine() {
