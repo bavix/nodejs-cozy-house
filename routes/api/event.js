@@ -5,11 +5,12 @@ const dispatch = require('../../queue/dispatch');
 
 const { enqueue } = require('../../consts/routes');
 
+var Referer = require('referer-parser');
+
 /* POST event listing. */
 router.post('/event', function (req, res, next) {
 
     const entity = new Event(req, res);
-    entity.request();
     entity.recipient();
     // entity.queue();
 

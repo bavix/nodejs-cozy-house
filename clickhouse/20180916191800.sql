@@ -1,4 +1,6 @@
 CREATE TABLE events (
+  target String,
+
   request_method Nullable(Enum8(
     'GET' = 0,
     'POST' = 1,
@@ -17,7 +19,6 @@ CREATE TABLE events (
   request_ip FixedString(16),
   request_bot Int8 DEFAULT 0,
   request_user_agent Nullable(String),
-  request_sid Nullable(String),
 
   recipient_request_seconds Int64,
   recipient_request_nanoseconds Int32,
@@ -84,6 +85,7 @@ CREATE TABLE events (
   event_json Nullable(String),
 
   page_load_time Int16 DEFAULT 0,
+  session_id Nullable(String),
   
   platform_name Nullable(String),
   platform_version Nullable(String),
@@ -118,9 +120,9 @@ CREATE TABLE events (
   ymclid Nullable(String),
   yclid Nullable(String),
 
-  ef_id Nullable(String),
-
-  referrer_channel Nullable(Enum8(
+  referrer_known Int8 DEFAULT 0,
+  referrer_name Nullable(String),
+  referrer_medium Nullable(Enum8(
     'direct' = 0,
     'advert' = 1,
     'email' = 2,
@@ -128,8 +130,9 @@ CREATE TABLE events (
     'internal' = 4,
     'search' = 5
   )),
-  referrer_domain Nullable(String),
-  referrer Nullable(String),
+  referrer_search_parameter Nullable(String),
+  referrer_search_term Nullable(String),
+  referrer_uri Nullable(String),
 
   utm_source Nullable(String),
   utm_medium Nullable(String),
