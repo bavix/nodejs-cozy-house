@@ -6,9 +6,8 @@ const express = require('express');
 const app = express();
 
 // добавляем поддержку form
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
+app.use(express.json());
+app.use(express.urlencoded({
     extended: true
 }));
 
