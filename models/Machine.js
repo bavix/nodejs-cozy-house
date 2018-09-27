@@ -10,7 +10,7 @@ class Machine {
         this.os_hostname = os.hostname();
         this.hostname = req ? req.hostname : this.os_hostname;
         this.ip = ip.address();
-        this.port = req ? req.app.settings.port : process.env.PORT;
+        this.port = parseInt(req ? req.app.settings.port : process.env.PORT);
         this.platform = os.platform();
         this.arch = os.arch();
         this.uptime = process.uptime();

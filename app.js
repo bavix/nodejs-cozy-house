@@ -19,8 +19,14 @@ for (const [routePath, routeData] of routes) {
 }
 
 app.use(function (req, res, next) {
-    res.status(404).send({
-        error: 'Page not found'
+    const error = new Error('Page not found');
+    error.httpStatusCode = 404;
+    next(error);
+});
+
+app.use(function(err, req, res, next) {
+    res.status(err.httpStatusCode ? err.httpStatusCode : 500).send({
+        error: err.message
     });
 });
 

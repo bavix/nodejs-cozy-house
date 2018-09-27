@@ -11,6 +11,7 @@ class Event {
     constructor(req, res, params) {
         this._req = req;
         this._res = res;
+        this.target = req.appTarget;
 
         // load param's in model
         if (params !== undefined) {
