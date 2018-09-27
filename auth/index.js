@@ -5,9 +5,9 @@ module.exports = async (req) => {
     const auth = req.get('Authorization');
 
     if (auth) {
-        const [type, token] = auth.split(' ');
+        const [type, token] = auth.toLowerCase().split(' ');
 
-        if (type && type.toLowerCase() === 'bearer') {
+        if (type === 'bearer') {
             return await db
                 .one('select name from targets where token=$1', token)
                 .then((res) => {
