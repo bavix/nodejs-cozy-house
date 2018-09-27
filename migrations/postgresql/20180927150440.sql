@@ -1,10 +1,7 @@
 CREATE TABLE IF NOT EXISTS targets (
-  id SERIAL PRIMARY KEY,
-  token UUID NOT NULL,
+  token UUID PRIMARY KEY,
   name VARCHAR(40) NOT NULL,
   active BOOLEAN DEFAULT TRUE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
-
-CREATE INDEX CONCURRENTLY targets_token_name_index ON targets (token, name);
