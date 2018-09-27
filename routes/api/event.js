@@ -14,7 +14,7 @@ router.post('/event', async function (req, res, next) {
     entity.recipient();
 
     // write to queue
-    await dispatch(enqueue, entity).then((res) => {
+    await dispatch(enqueue, entity).then(() => {
         res.status(202).send({
             message: 'Accepted'
         });
