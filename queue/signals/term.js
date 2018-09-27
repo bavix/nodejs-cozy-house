@@ -1,7 +1,7 @@
 
 const fs = require('fs');
 
-module.exports = (conn) => {
+module.exports = (store, conn) => {
     return () => {
         conn.close(() => process.exit(1));
     }

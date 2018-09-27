@@ -6,8 +6,9 @@ const ch = new ClickHouse({
     auth: process.env.CLICKHOUSE_AUTH
 });
 
-module.exports = (conn) => {
+module.exports = (store, conn) => {
     return () => {
-        conn.close(() => process.exit(1));
+        console.log(store);
+        // conn.close(() => process.exit(1));
     }
 };

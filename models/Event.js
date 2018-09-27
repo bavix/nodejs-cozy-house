@@ -11,7 +11,6 @@ class Event {
     constructor(req, res, params) {
         this._req = req;
         this._res = res;
-        this.target = req.appTarget;
 
         // load param's in model
         if (params !== undefined) {
@@ -39,6 +38,7 @@ class Event {
     }
 
     request() {
+        this.target = this._req.appTarget;
         this.request_method = this._req.method;
         this.request_language = this._req.acceptsLanguages().shift();
         this.request_secure = this._req.secure;
