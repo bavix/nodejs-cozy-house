@@ -95,7 +95,6 @@ class Event {
     }
 
     _visitor(body) {
-        this.visitor_webp = null;
         this.visitor_user_id = null;
         this.visitor_uuid = null;
         this.visitor_browser_width = null;

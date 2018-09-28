@@ -104,7 +104,6 @@ CREATE TABLE events (
   platform_os_family Nullable(String),
   platform_os_version Nullable(String),
 
-  visitor_webp Int8 DEFAULT 0,
   visitor_user_id Nullable(Int32),
   visitor_uuid Nullable(FixedString(16)),
   visitor_browser_width Nullable(Int16),
