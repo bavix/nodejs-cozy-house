@@ -23,7 +23,7 @@ class Event {
         }
     }
 
-    _platform() {
+    _platform(body) {
         const pl = platform.parse(this.request_user_agent);
 
         this.platform_name = pl.name;
@@ -38,9 +38,7 @@ class Event {
         this.platform_os_version = pl.os.version;
     }
 
-    request() {
-        const body = this._req.body;
-
+    _request(body) {
         this.target = this._req.appTarget;
         this.request_method = this._req.method;
         this.request_language = this._req.acceptsLanguages().shift();
@@ -71,7 +69,7 @@ class Event {
         });
     }
 
-    _event() {
+    _event(body) {
         this.event_device = null;
         this.event_category = null;
         this.event_action = null;
@@ -95,7 +93,7 @@ class Event {
         });
     }
 
-    _visitor() {
+    _visitor(body) {
         this.visitor_webp = null;
         this.visitor_user_id = null;
         this.visitor_uuid = null;
@@ -124,8 +122,7 @@ class Event {
         });
     }
 
-    _referrer() {
-        const body = this._req.body;
+    _referrer(body) {
         const ref = new Referrer(
             this._req.get('Referer') || '',
             body.url
@@ -148,16 +145,18 @@ class Event {
     }
 
     recipient() {
-        this.request();
+        const body = this._req.body;
+
+        this._request(body);
         const machine = this._machine();
         for (const [key, value] of machine) {
             this['recipient_' + key] = value;
         }
 
-        this._platform();
-        this._referrer();
-        this._visitor();
-        this._event();
+        this._platform(body);
+        this._referrer(body);
+        this._visitor(body);
+        this._event(body);
     }
 
     consumer() {
