@@ -1,4 +1,5 @@
 
+const url = require('url');
 let os = require('os');
 const ip = require('ip');
 const Machine = require('./Machine');
@@ -38,20 +39,19 @@ class Event {
     }
 
     request() {
+        const body = this._req.body;
+
         this.target = this._req.appTarget;
         this.request_method = this._req.method;
         this.request_language = this._req.acceptsLanguages().shift();
         this.request_secure = this._req.secure;
         this.request_ajax = this._req.xhr;
         this.request_route = null;
-        this.request_domain = null;
-        this.request_url = null;
+        this.request_url = body.url || null;
+        this.request_domain = url.parse(this.request_url || '').hostname;
         this.request_ip = this._req.ip;
         this.request_user_agent = this._req.get('User-Agent');
         this.request_bot = isBot(this.request_user_agent);
-
-        const deny = ['ip', 'user_agent', 'bot'];
-        const body = this._req.body;
 
         this.google_client_id = body.google_client_id || null;
         this.session_id = body.session_id || null;
@@ -61,10 +61,11 @@ class Event {
         this.yclid = body.yclid || null;
         this.ef_id = body.ef_id || null;
 
-        this.page_load_time = body.page_load_time || Number.MAX_SAFE_INTEGER || 0;
+        this.page_load_time = body.page_load_time || 0;
 
-        _.forEach(this._req.body.request, (value, key) => {
-            if (!deny.includes(key)) {
+        const allow = ['method', 'language', 'secure', 'ajax', 'route'];
+        _.forEach(body.request, (value, key) => {
+            if (allow.includes(key)) {
                 this['request_' + key] = value;
             }
         });
