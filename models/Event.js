@@ -45,11 +45,19 @@ class Event {
         this.request_secure = this._req.secure;
         this.request_ajax = this._req.xhr;
         this.request_route = null;
-        this.request_url = body.url || null;
-        this.request_domain = url.parse(this.request_url || '').hostname;
+        this.request_url = null;
         this.request_ip = this._req.ip;
         this.request_user_agent = this._req.get('User-Agent');
         this.request_bot = isBot(this.request_user_agent);
+
+        const allow = ['method', 'language', 'secure', 'ajax', 'route', 'url'];
+        _.forEach(body.request, (value, key) => {
+            if (allow.includes(key)) {
+                this['request_' + key] = value;
+            }
+        });
+
+        this.request_domain = url.parse(this.request_url || '').hostname;
 
         this.google_client_id = body.google_client_id || null;
         this.session_id = body.session_id || null;
@@ -60,13 +68,6 @@ class Event {
         this.ef_id = body.ef_id || null;
 
         this.page_load_time = body.page_load_time || 0;
-
-        const allow = ['method', 'language', 'secure', 'ajax', 'route'];
-        _.forEach(body.request, (value, key) => {
-            if (allow.includes(key)) {
-                this['request_' + key] = value;
-            }
-        });
     }
 
     _event(body) {
