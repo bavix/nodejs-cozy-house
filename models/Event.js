@@ -78,6 +78,21 @@ class Event {
         this.event_label = null;
         this.event_value = null;
         this.event_json = null;
+
+        const allow = [
+            'device',
+            'category',
+            'action',
+            'label',
+            'value',
+            'json',
+        ];
+
+        _.forEach(body.event, (value, key) => {
+            if (allow.includes(key)) {
+                this['event_' + key] = value;
+            }
+        });
     }
 
     _visitor() {
@@ -90,6 +105,23 @@ class Event {
         this.visitor_device_height = null;
         this.visitor_device = null;
         this.visitor_device_orientation = null;
+
+        const allow = [
+            'user_id',
+            'uuid',
+            'browser_width',
+            'browser_height',
+            'device_width',
+            'device_height',
+            'device',
+            'device_orientation',
+        ];
+
+        _.forEach(body.event, (value, key) => {
+            if (allow.includes(key)) {
+                this['visitor_' + key] = value;
+            }
+        });
     }
 
     _referrer() {
