@@ -117,7 +117,7 @@ class Event {
             'device_orientation',
         ];
 
-        _.forEach(body.event, (value, key) => {
+        _.forEach(body.visitor, (value, key) => {
             if (allow.includes(key)) {
                 this['visitor_' + key] = value;
             }
