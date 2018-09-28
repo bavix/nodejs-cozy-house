@@ -9,10 +9,10 @@ module.exports = async (req) => {
 
         if (type === 'bearer') {
             return await db
-                .one('select name from targets where token=$1', token)
+                .one('select name, active from targets where token=$1', token)
                 .then((res) => {
                     req.appTarget = res.name;
-                    return true;
+                    return res.active;
                 })
                 .catch((err) => false);
         }
