@@ -65,7 +65,6 @@ class Event {
         this.ym_client_id = body.ym_client_id || null;
         this.ymclid = body.ymclid || null;
         this.yclid = body.yclid || null;
-        this.ef_id = body.ef_id || null;
 
         this.page_load_time = body.page_load_time || 0;
     }
@@ -168,6 +167,12 @@ class Event {
 
     entries() {
         return Object.entries(this);
+    }
+
+    validate() {
+        return this.event_device &&
+            this.event_category &&
+            this.event_action;
     }
 
     toObject() {

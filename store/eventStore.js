@@ -1,6 +1,18 @@
 
+const _ = require('lodash');
 const Store = require('./index');
 const Event = require('../models/Event');
+const ClickHouse = require('@apla/clickhouse');
+const schema = process.env.CLICKHOUSE_SCHEMA;
+
+// storages
+const fs = require('fs');
+const ch = new ClickHouse({
+    host: process.env.CLICKHOUSE_HOST,
+    port: process.env.CLICKHOUSE_PORT,
+    auth: process.env.CLICKHOUSE_AUTH,
+    pathname: '/' + schema
+});
 
 class EventStore extends Store {
     persist(item) {
@@ -9,9 +21,39 @@ class EventStore extends Store {
         super.persist(model.toObject());
     }
 
-    flush() {
-        console.log(this.items);
-        super.flush();
+    flush(callback) {
+        if (this.items.length <= 0) {
+            return;
+        }
+
+        const items = _.map(this.items, _.clone);
+        super.flush(callback);
+
+        const head = _.head(items);
+        const keys = _.keys(head);
+        const stream = ch.query (
+            'INSERT INTO ' + schema + '.events (' + keys.join(', ') + ')',
+            {format: 'JSONEachRow'},
+            (error) => {
+                if (error) {
+                    const timestamp = +new Date();
+                    const pid = process.pid;
+                    const path = __dirname + '/../dump/';
+                    const file = path + timestamp + '-' + pid + '.json';
+                    fs.writeFile(file, JSON.stringify(items), (error) => {
+                        if (error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            }
+        );
+
+        _.forEach(items, (item) => {
+            stream.write(item);
+        });
+
+        stream.end();
     }
 }
 

@@ -1,8 +1,16 @@
 
-const fs = require('fs');
-
+/**
+ * @param {EventStore} store
+ * @param conn
+ *
+ * @return {Function}
+ */
 module.exports = (store, conn) => {
     return () => {
-        conn.close(() => process.exit(1));
+        store.flush(() => {
+            conn.close(() => {
+                process.exit(1)
+            });
+        });
     }
 };

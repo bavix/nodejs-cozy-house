@@ -1,17 +1,26 @@
 
+const batchSize = Number(process.env.CLICKHOUSE_BATCHSIZE);
+
 class Store {
     constructor() {
+        this.index = 0;
         this.items = [];
     }
 
     persist(item) {
-        console.log(item);
         this.items.push(item);
+        if (++this.index >= batchSize) {
+            this.index = 0;
+            this.flush();
+        }
     }
 
-    flush() {
-        console.log('flush');
+    flush(callback) {
         this.items = [];
+
+        if (callback) {
+            callback(this);
+        }
     }
 }
 

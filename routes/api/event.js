@@ -22,6 +22,12 @@ router.post('/event', async function (req, res, next) {
     const entity = new Event(req, res);
     entity.recipient();
 
+    if (!entity.validate()) {
+        return res.status(400).send({
+            message: 'Bad Request'
+        });
+    }
+
     // write to queue
     await dispatch(enqueue, entity).then(() => {
         res.status(202).send({
