@@ -126,7 +126,7 @@ class Event {
     _referrer(body) {
         const ref = new Referrer(
             this._req.get('Referer') || '',
-            body.url
+            this.request_url
         );
 
         // referrer
