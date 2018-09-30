@@ -5,12 +5,14 @@ const Event = require('../models/Event');
 const ClickHouse = require('@apla/clickhouse');
 const schema = process.env.CLICKHOUSE_SCHEMA;
 
+const auth = process.env.CLICKHOUSE_USER + ':' + process.env.CLICKHOUSE_PASSWORD;
+
 // storages
 const fs = require('fs');
 const ch = new ClickHouse({
     host: process.env.CLICKHOUSE_HOST,
     port: process.env.CLICKHOUSE_PORT,
-    auth: process.env.CLICKHOUSE_AUTH,
+    auth,
     pathname: '/' + schema
 });
 

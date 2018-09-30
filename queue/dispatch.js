@@ -4,14 +4,18 @@ const crypto = require('crypto');
 const uuid = require('uuid/v4');
 const correlationId = uuid();
 
+const algo = process.env.CRYPTO_ALGO;
+const secret = process.env.CRYPTO_SECRET;
+const queueUrl = require('./url');
+
 module.exports = (route, workload) => {
 
     const message = workload.toString();
-    const messageId = crypto.createHmac(process.env.CRYPTO_ALGO, process.env.CRYPTO_SECRET)
+    const messageId = crypto.createHmac(algo, secret)
         .update(message)
         .digest('hex');
 
-    return amqp.connect(process.env.QUEUE_URL, {
+    return amqp.connect(queueUrl, {
         timeout: parseInt(process.env.QUEUE_TIMEOUT)
     }).then(function(conn) {
 

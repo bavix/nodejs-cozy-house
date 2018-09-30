@@ -1,4 +1,4 @@
-CREATE TABLE events (
+CREATE TABLE IF NOT EXISTS events (
   target String,
 
   request_method Nullable(Enum8(
