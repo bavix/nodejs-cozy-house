@@ -18,7 +18,7 @@ const ch = new ClickHouse({
 
 class EventStore extends Store {
     persist(item) {
-        const model = new Event(undefined, undefined, item);
+        const model = new Event(undefined, item);
         model.consumer();
         super.persist(model.toObject());
     }
