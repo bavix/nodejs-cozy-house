@@ -9,7 +9,7 @@ module.exports = (store, route, consume) => {
     return amqp.connect(queueUrl).then((conn) => {
 
         const terminate = term(store, conn);
-        const hangUp = hup(store, conn);
+        const hangUp = hup(store);
 
         // signals
         process.once('SIGTERM', terminate);

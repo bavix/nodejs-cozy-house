@@ -9,8 +9,8 @@ const isAjax = require('koa-isajax');
 const app = new koa();
 
 app.use(isAjax());
-app.use(json());
 app.use(body());
+app.use(json({pretty: false}));
 
 /**
  * @see https://github.com/koajs/koa/issues/599
