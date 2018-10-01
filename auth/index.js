@@ -1,7 +1,7 @@
 
 const db = require('./db');
 
-module.exports = async (ctx) => {
+module.exports = async (ctx, next) => {
     const auth = ctx.get('Authorization');
 
     if (auth) {
@@ -12,11 +12,18 @@ module.exports = async (ctx) => {
                 .one('select name, active from targets where token=$1', token)
                 .then((res) => {
                     ctx.state.appTarget = res.name;
-                    return res.active;
+
+                    if (!res.active) {
+                        ctx.throw(401);
+                    }
+
+                    return next();
                 })
-                .catch((err) => false);
+                .catch((err) => {
+                    ctx.throw(401);
+                });
         }
     }
 
-    return false;
+    ctx.throw(401);
 };

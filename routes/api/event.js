@@ -10,22 +10,14 @@ const router = new Router({
     prefix: '/api'
 });
 
-router.use('/event', async (ctx, next) => {
-    if (ctx.req.method === 'POST' && !await checkAuth(ctx)) {
-        ctx.status = 401;
-    }
-
-    return next();
-});
-
 /* POST event listing. */
-router.post('/event', async function (ctx, next) {
+router.post('/event', checkAuth, async function (ctx, next) {
 
     const entity = new Event(ctx);
     entity.recipient();
 
     if (!entity.validate()) {
-        ctx.throw(400, 'Bad Request');
+        ctx.throw(400);
     }
 
     // write to queue
@@ -35,7 +27,7 @@ router.post('/event', async function (ctx, next) {
             message: 'Accepted'
         };
     }).catch((err) => {
-        ctx.throw(504, 'Gateway Timeout');
+        ctx.throw(504);
     });
 
 });

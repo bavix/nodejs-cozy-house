@@ -17,6 +17,16 @@ app.use(body());
  */
 app.proxy = true;
 
+// error handler
+app.use(async (ctx, next) => {
+    try {
+        await next();
+    } catch ({ statusCode, status, message }) {
+        ctx.status = statusCode || status || 500;
+        ctx.body = {message};
+    }
+});
+
 // routes
 const apiEvent = require('./routes/api/event');
 
@@ -24,17 +34,8 @@ app.use(apiEvent.allowedMethods());
 app.use(apiEvent.routes());
 
 // throw
-app.use(function (ctx, next) {
-    ctx.status = 404;
-    return next();
-});
-
-app.use(function(ctx) {
-    const err = ctx.response;
-    ctx.status = err.status ? err.status : 500;
-    ctx.body = {
-        error: err.message
-    };
+app.use(async (ctx, next) => {
+    ctx.throw(404);
 });
 
 module.exports = app;
