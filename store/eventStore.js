@@ -7,7 +7,7 @@ const schema = process.env.CLICKHOUSE_SCHEMA;
 
 const auth = process.env.CLICKHOUSE_USER + ':' + process.env.CLICKHOUSE_PASSWORD;
 
-// storages
+// storage's
 const fs = require('fs');
 const ch = new ClickHouse({
     host: process.env.CLICKHOUSE_HOST,

@@ -11,7 +11,7 @@ const router = new Router({
 });
 
 /* POST event listing. */
-router.post('/event', checkAuth, async function (ctx, next) {
+router.post('/event', checkAuth, async function (ctx) {
 
     const entity = new Event(ctx);
     entity.recipient();

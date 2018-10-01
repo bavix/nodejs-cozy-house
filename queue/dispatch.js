@@ -1,9 +1,13 @@
-const amqp = require('amqplib');
-const uuid = require('uuid/v4');
-const correlationId = uuid();
-const queueUrl = require('./url');
 const timeout = Number(process.env.QUEUE_TIMEOUT);
+const queueUrl = require('./url');
+const amqp = require('amqplib');
 
+/**
+ * @param route
+ * @param workload
+ *
+ * @return {Promise}
+ */
 module.exports = (route, workload) => {
 
     return amqp.connect(queueUrl, {timeout}).then(function(conn) {
@@ -12,8 +16,7 @@ module.exports = (route, workload) => {
 
             return ch.assertQueue(route, {durable: true}).then(() => {
                 ch.sendToQueue(route, Buffer.from(workload.toString()), {
-                    deliveryMode: true,
-                    correlationId
+                    deliveryMode: true
                 });
 
                 return ch.close();

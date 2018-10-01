@@ -1,8 +1,0 @@
-{
-  "name": "study",
-  "version": "0.0.1",
-  "main": "index.js",
-  "devDependencies": {
-    "js-cookie": "^2.2.0"
-  }
-}
