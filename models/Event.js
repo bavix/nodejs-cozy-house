@@ -7,11 +7,11 @@ const platform = require('platform');
 const isBot = require('isbot');
 const _ = require('lodash');
 const Referrer = require('referer-parser');
+const dateTime = require('date-and-time');
 
 class Event {
-    constructor(req, res, params) {
-        this._req = req;
-        this._res = res;
+    constructor(ctx, params) {
+        this._ctx = ctx;
 
         // load param's in model
         if (params !== undefined) {
@@ -39,15 +39,15 @@ class Event {
     }
 
     _request(body) {
-        this.target = this._req.appTarget;
-        this.request_method = this._req.method;
-        this.request_language = this._req.acceptsLanguages().shift();
-        this.request_secure = this._req.secure;
-        this.request_ajax = this._req.xhr;
+        this.target = this._ctx.state.appTarget;
+        this.request_method = this._ctx.method;
+        this.request_language = this._ctx.acceptsLanguages().shift();
+        this.request_secure = this._ctx.secure;
+        this.request_ajax = this._ctx.state.xhr;
         this.request_route = null;
         this.request_url = null;
-        this.request_ip = this._req.ip;
-        this.request_user_agent = this._req.get('User-Agent');
+        this.request_ip = this._ctx.ip;
+        this.request_user_agent = this._ctx.get('user-agent');
         this.request_bot = isBot(this.request_user_agent);
 
         const allow = ['method', 'language', 'secure', 'ajax', 'route', 'url'];
@@ -123,7 +123,7 @@ class Event {
 
     _referrer(body) {
         const ref = new Referrer(
-            this._req.get('Referer') || '',
+            this._ctx.get('Referer') || '',
             this.request_url
         );
 
@@ -144,7 +144,7 @@ class Event {
     }
 
     recipient() {
-        const body = this._req.body;
+        const body = this._ctx.request.body;
 
         this._request(body);
         const machine = this._machine();
@@ -156,6 +156,10 @@ class Event {
         this._referrer(body);
         this._visitor(body);
         this._event(body);
+
+        const now = new Date();
+        this.created_date = dateTime.format(now, 'YYYY/MM/DD');
+        this.created_time = dateTime.format(now, 'YYYY/MM/DD HH:mm:ss');
     }
 
     consumer() {
@@ -187,7 +191,7 @@ class Event {
 
     _machine(consumer = false) {
         return Object.entries(
-            new Machine(this._req, this._res, consumer)
+            new Machine(this._ctx, consumer)
         );
     }
 }

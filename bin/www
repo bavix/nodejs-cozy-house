@@ -7,16 +7,15 @@ const app = require('../app');
 const http = require('http');
 
 /**
- * Get port from environment and store in Express.
+ * Get port from environment and store in Framework.
  */
 const port = process.env.PORT || '3000';
-app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-const server = http.createServer(app);
+const server = http.createServer(app.callback());
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -1,32 +1,40 @@
 // загружаем .env
 require('dotenv').load();
 
-// инциализируем express
-const express = require('express');
-const app = express();
+// инциализируем framework
+const koa = require('koa');
+const body = require('koa-body');
+const json = require('koa-json');
+const isAjax = require('koa-isajax');
+const app = new koa();
 
-// добавляем поддержку form
-app.use(express.json());
-app.use(express.urlencoded({
-    extended: true
-}));
+app.use(isAjax());
+app.use(json());
+app.use(body());
 
-// регистрация роутов
-const routes = require('./routes/index');
-for (const [routePath, routeData] of routes) {
-    app.use(routePath, routeData);
-}
+/**
+ * @see https://github.com/koajs/koa/issues/599
+ */
+app.proxy = true;
 
-app.use(function (req, res, next) {
-    const error = new Error('Page not found');
-    error.httpStatusCode = 404;
-    next(error);
+// routes
+const apiEvent = require('./routes/api/event');
+
+app.use(apiEvent.allowedMethods());
+app.use(apiEvent.routes());
+
+// throw
+app.use(function (ctx, next) {
+    ctx.status = 404;
+    return next();
 });
 
-app.use(function(err, req, res, next) {
-    res.status(err.httpStatusCode ? err.httpStatusCode : 500).send({
+app.use(function(ctx) {
+    const err = ctx.response;
+    ctx.status = err.status ? err.status : 500;
+    ctx.body = {
         error: err.message
-    });
+    };
 });
 
 module.exports = app;

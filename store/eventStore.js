@@ -18,7 +18,7 @@ const ch = new ClickHouse({
 
 class EventStore extends Store {
     persist(item) {
-        const model = new Event(undefined, undefined, item);
+        const model = new Event(undefined, item);
         model.consumer();
         super.persist(model.toObject());
     }
@@ -37,6 +37,7 @@ class EventStore extends Store {
             'INSERT INTO ' + schema + '.events (' + keys.join(', ') + ')',
             {format: 'JSONEachRow'},
             (error) => {
+                console.log(error);
                 if (error) {
                     const timestamp = +new Date();
                     const pid = process.pid;
