@@ -57,9 +57,7 @@ CREATE TABLE IF NOT EXISTS events (
   consumer_request_seconds Int64,
   consumer_request_nanoseconds Int32,
   consumer_os_hostname String,
-  consumer_hostname String,
   consumer_ip FixedString(16),
-  consumer_port Int16,
   consumer_platform String,
   consumer_arch Enum8(
     'arm' = 0,

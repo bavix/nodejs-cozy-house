@@ -159,7 +159,7 @@ class Event {
     }
 
     consumer() {
-        const machine = this._machine();
+        const machine = this._machine(true);
         for (const [key, value] of machine) {
             this['consumer_' + key] = value;
         }
@@ -185,9 +185,9 @@ class Event {
         return JSON.stringify(this.toObject());
     }
 
-    _machine() {
+    _machine(consumer = false) {
         return Object.entries(
-            new Machine(this._req, this._res)
+            new Machine(this._req, this._res, consumer)
         );
     }
 }
