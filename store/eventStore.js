@@ -37,7 +37,6 @@ class EventStore extends Store {
             'INSERT INTO ' + schema + '.events (' + keys.join(', ') + ')',
             {format: 'JSONEachRow'},
             (error) => {
-                console.log(error);
                 if (error) {
                     const timestamp = +new Date();
                     const pid = process.pid;
