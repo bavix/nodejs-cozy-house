@@ -14,7 +14,7 @@ const _ = require('lodash');
 const fs = require('fs');
 
 /**
- * Load dump to
+ * uploading dump to the Store
  */
 glob('./dump/*.json', (err, files) => {
     for (const file of files) {
