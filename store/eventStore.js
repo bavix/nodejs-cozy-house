@@ -23,6 +23,15 @@ class EventStore extends Store {
         super.persist(model.toObject());
     }
 
+    /**
+     * @param items {Array<Object>}
+     */
+    join(items) {
+        for (const item of items) {
+            super.persist(item);
+        }
+    }
+
     flush(callback) {
         if (this.items.length <= 0) {
             return;
