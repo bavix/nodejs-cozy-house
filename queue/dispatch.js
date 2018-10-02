@@ -1,6 +1,6 @@
+
 const timeout = Number(process.env.QUEUE_TIMEOUT);
-const queueUrl = require('./url');
-const amqp = require('amqplib');
+const amqp = require('./amqp');
 
 /**
  * @param route
@@ -10,7 +10,7 @@ const amqp = require('amqplib');
  */
 module.exports = (route, workload) => {
 
-    return amqp.connect(queueUrl, {timeout}).then(function(conn) {
+    return amqp({timeout}).then(function(conn) {
 
         return conn.createChannel().then(function(ch) {
 

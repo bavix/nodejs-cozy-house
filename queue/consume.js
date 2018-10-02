@@ -1,12 +1,11 @@
 
 const term = require('./signals/term');
 const hup = require('./signals/hup');
-const amqp = require('amqplib');
-const queueUrl = require('./url');
+const amqp = require('./amqp');
 
 module.exports = (store, route, consume) => {
 
-    return amqp.connect(queueUrl).then((conn) => {
+    return amqp().then((conn) => {
 
         const terminate = term(store, conn);
         const hangUp = hup(store);

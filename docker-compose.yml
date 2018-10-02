@@ -4,14 +4,21 @@ services:
   rabbitmq:
     image: rabbitmq:3.7-management
     environment:
-    - RABBITMQ_DEFAULT_USER=${RABBITMQ_LOGIN}
-    - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+      RABBITMQ_DEFAULT_USER: ${QUEUE_USER}
+      RABBITMQ_DEFAULT_PASS: ${QUEUE_PASSWORD}
 
   clickhouse:
     image: yandex/clickhouse-server
+    volumes:
+      - ./docker/clickhouse/config.xml:/etc/clickhouse-server/config.xml
+      - ./docker/clickhouse/users.xml:/etc/clickhouse-server/users.xml
 
   postgresql:
     image: postgres:latest
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
 
   nginx:
     image: nginx:latest
