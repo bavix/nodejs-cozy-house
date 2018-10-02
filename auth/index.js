@@ -1,29 +1,27 @@
 
-const db = require('./db');
+const Store = require('./store');
+const knex = require('./db');
 
 module.exports = async (ctx, next) => {
-    const auth = ctx.get('Authorization');
+    const store = new Store(ctx);
 
-    if (auth) {
-        const [type, token] = auth.toLowerCase().split(' ');
-
-        if (type === 'bearer') {
-            return await db
-                .one('select name, active from targets where token=$1', token)
-                .then((res) => {
-                    ctx.state.appTarget = res.name;
-
-                    if (!res.active) {
-                        ctx.throw(401);
-                    }
-
-                    return next();
-                })
-                .catch((err) => {
-                    ctx.throw(401);
-                });
+    if (store.exists) {
+        if (store.invalid) {
+            return store.unauthorized();
         }
+
+        return next();
     }
 
-    ctx.throw(401);
+    try {
+        const { name } = await knex('targets')
+            .select('name', 'active')
+            .where({ token: store.token, active: true })
+            .first();
+
+        store.save(name);
+        return next();
+    } catch (err) {
+        return store.unauthorized();
+    }
 };

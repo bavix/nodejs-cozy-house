@@ -34,7 +34,7 @@ app.use(apiEvent.allowedMethods());
 app.use(apiEvent.routes());
 
 // throw
-app.use(async (ctx, next) => {
+app.use((ctx, next) => {
     ctx.throw(404);
 });
 
