@@ -1,5 +1,5 @@
 
-const url = require('url');
+const { URL } = require('url');
 let os = require('os');
 const ip = require('ip');
 const Machine = require('./Machine');
@@ -57,7 +57,26 @@ class Event {
             }
         });
 
-        this.request_domain = url.parse(this.request_url || '').hostname;
+        this.request_domain = null;
+
+        // utm
+        this.utm_source = null;
+        this.utm_medium = null;
+        this.utm_term = null;
+        this.utm_content = null;
+        this.utm_campaign = null;
+
+        try {
+            const { searchParams, hostname } = new URL(this.request_url);
+            this.request_domain = hostname;
+            this.utm_source = searchParams.get('utm_source');
+            this.utm_medium = searchParams.get('utm_medium');
+            this.utm_term = searchParams.get('utm_term');
+            this.utm_content = searchParams.get('utm_content');
+            this.utm_campaign = searchParams.get('utm_campaign');
+        } catch (e) {
+            console.log(e);
+        }
 
         this.google_client_id = body.google_client_id || null;
         this.session_id = body.session_id || null;
@@ -134,13 +153,6 @@ class Event {
         this.referrer_search_parameter = ref.search_parameter || null;
         this.referrer_search_term = ref.search_term || null;
         this.referrer_uri = ref.uri.href || null;
-
-        // utm
-        this.utm_source = body.utm_source || null;
-        this.utm_medium = body.utm_medium || null;
-        this.utm_term = body.utm_term || null;
-        this.utm_content = body.utm_content || null;
-        this.utm_campaign = body.utm_campaign || null;
     }
 
     recipient() {
