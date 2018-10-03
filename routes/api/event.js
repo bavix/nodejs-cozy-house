@@ -11,7 +11,7 @@ const router = new Router({
 });
 
 /* POST event listing. */
-router.post('/event', checkAuth, async function (ctx) {
+router.post('/event', checkAuth, (ctx) => {
 
     const entity = new Event(ctx);
     entity.recipient();
@@ -21,7 +21,7 @@ router.post('/event', checkAuth, async function (ctx) {
     }
 
     // write to queue
-    await dispatch(enqueue, entity).then(() => {
+    return dispatch(enqueue, entity).then(() => {
         ctx.status = 202;
         ctx.body = {
             message: 'Accepted'

@@ -7,9 +7,11 @@ class Store {
         this.items = [];
     }
 
-    persist(item) {
-        this.items.push(item);
-        if (++this.index >= batchSize) {
+    persist(...items) {
+        this.items.push(...items);
+        this.index += items.length;
+
+        if (this.index >= batchSize) {
             this.index = 0;
             this.flush();
         }

@@ -188,7 +188,8 @@ class Event {
     }
 
     validate() {
-        return this.event_device &&
+        return this.target &&
+            this.event_device &&
             this.event_category &&
             this.event_action;
     }

@@ -6,7 +6,12 @@ module.exports = async (ctx, next) => {
     const store = new Store(ctx);
 
     if (store.exists && !store.invalid) {
-        return next();
+        if (!store.appTarget) {
+            store.unauthorized();
+        }
+
+        return await next();
+
     }
 
     try {
@@ -16,9 +21,10 @@ module.exports = async (ctx, next) => {
             .first();
 
         store.save(name);
-        return next();
     } catch (err) {
         store.save(null);
-        return store.unauthorized();
+        store.unauthorized();
     }
+
+    return await next();
 };

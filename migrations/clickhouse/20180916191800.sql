@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS events (
   platform_product Nullable(String),
   platform_manufacturer Nullable(String),
   platform_layout Nullable(String),
-  platform_os_arch Nullable(String),
+  platform_os_arch Nullable(Int8),
   platform_os_family Nullable(String),
   platform_os_version Nullable(String),
 

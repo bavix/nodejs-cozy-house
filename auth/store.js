@@ -40,7 +40,7 @@ class Store {
     }
 
     get invalid() {
-        return Boolean(!this.target || this.target.invalid || !this.appTarget);
+        return Boolean(!this.target || this.target.invalid);
     }
 
     get appTarget() {
@@ -52,7 +52,8 @@ class Store {
     }
 
     save(appTarget) {
-        data[this.token] = new Cache(120 * 1000, appTarget);
+        this.appTarget = appTarget;
+        data[this.token] = new Cache(120 * 1000, this.appTarget);
     }
 
     unauthorized() {
