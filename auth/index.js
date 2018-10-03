@@ -5,11 +5,7 @@ const knex = require('../lib/db');
 module.exports = async (ctx, next) => {
     const store = new Store(ctx);
 
-    if (store.exists) {
-        if (store.invalid) {
-            return store.unauthorized();
-        }
-
+    if (store.exists && !store.invalid) {
         return next();
     }
 
@@ -22,6 +18,7 @@ module.exports = async (ctx, next) => {
         store.save(name);
         return next();
     } catch (err) {
+        store.save(null);
         return store.unauthorized();
     }
 };

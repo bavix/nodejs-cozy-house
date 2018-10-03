@@ -23,7 +23,7 @@ class Event {
         }
     }
 
-    _platform(body) {
+    _platform() {
         const pl = platform.parse(this.request_user_agent);
 
         this.platform_name = pl.name;
@@ -48,7 +48,7 @@ class Event {
         this.request_url = null;
         this.request_ip = this._ctx.ip;
         this.request_user_agent = this._ctx.get('user-agent');
-        this.request_bot = isBot(this.request_user_agent);
+        this.request_bot = false;
 
         const allow = ['method', 'language', 'secure', 'ajax', 'route', 'url'];
         _.forEach(body.request, (value, key) => {
@@ -65,18 +65,6 @@ class Event {
         this.utm_term = null;
         this.utm_content = null;
         this.utm_campaign = null;
-
-        try {
-            const { searchParams, hostname } = new URL(this.request_url);
-            this.request_domain = hostname;
-            this.utm_source = searchParams.get('utm_source');
-            this.utm_medium = searchParams.get('utm_medium');
-            this.utm_term = searchParams.get('utm_term');
-            this.utm_content = searchParams.get('utm_content');
-            this.utm_campaign = searchParams.get('utm_campaign');
-        } catch (e) {
-            console.log(e);
-        }
 
         this.google_client_id = body.google_client_id || null;
         this.session_id = body.session_id || null;
@@ -164,7 +152,6 @@ class Event {
             this['recipient_' + key] = value;
         }
 
-        this._platform(body);
         this._referrer(body);
         this._visitor(body);
         this._event(body);
@@ -175,6 +162,21 @@ class Event {
     }
 
     consumer() {
+        this._platform();
+        this.request_bot = isBot(this.request_user_agent);
+
+        try {
+            const { searchParams, hostname } = new URL(this.request_url);
+            this.request_domain = hostname;
+            this.utm_source = searchParams.get('utm_source');
+            this.utm_medium = searchParams.get('utm_medium');
+            this.utm_term = searchParams.get('utm_term');
+            this.utm_content = searchParams.get('utm_content');
+            this.utm_campaign = searchParams.get('utm_campaign');
+        } catch (e) {
+            console.log(e);
+        }
+
         const machine = this._machine(true);
         for (const [key, value] of machine) {
             this['consumer_' + key] = value;
