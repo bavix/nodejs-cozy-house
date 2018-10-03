@@ -44,21 +44,16 @@ class EventStore extends Store {
         const keys = _.keys(head);
         const stream = ch.query(
             'INSERT INTO ' + schema + '.events (' + keys.join(', ') + ')',
-            {format: 'JSONEachRow'},
-            (error) => {
-                if (error) {
-                    const timestamp = +new Date();
-                    const pid = process.pid;
-                    const path = __dirname + '/../dump/';
-                    const file = path + timestamp + '-' + pid + '.json';
-                    fs.writeFile(file, JSON.stringify(items), (error) => {
-                        if (error) {
-                            console.log(error);
-                        }
-                    });
-                }
-            }
+            {format: 'JSONEachRow'}
         );
+
+        stream.on ('error', function (err) {
+            const timestamp = +new Date();
+            const pid = process.pid;
+            const path = __dirname + '/../dump/';
+            const file = path + timestamp + '-' + pid + '.json';
+            fs.writeFileSync(file, JSON.stringify(items), 'utf-8');
+        });
 
         _.forEach(items, (item) => {
             stream.write(item);
