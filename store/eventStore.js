@@ -42,7 +42,7 @@ class EventStore extends Store {
 
         const head = _.head(items);
         const keys = _.keys(head);
-        const stream = ch.query (
+        const stream = ch.query(
             'INSERT INTO ' + schema + '.events (' + keys.join(', ') + ')',
             {format: 'JSONEachRow'},
             (error) => {

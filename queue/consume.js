@@ -1,6 +1,5 @@
 
 const term = require('./signals/term');
-const hup = require('./signals/hup');
 const amqp = require('./amqp');
 
 module.exports = (store, route, consume) => {
@@ -8,12 +7,11 @@ module.exports = (store, route, consume) => {
     return amqp().then((conn) => {
 
         const terminate = term(store, conn);
-        const hangUp = hup(store);
 
         // signals
         process.once('SIGTERM', terminate);
         process.once('SIGINT', terminate);
-        process.once('SIGHUP', hangUp);
+        process.once('SIGHUP', store.flush.bind(store));
 
         return conn.createChannel().then(function (ch) {
 

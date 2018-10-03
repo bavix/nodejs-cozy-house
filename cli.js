@@ -3,7 +3,7 @@
 // load env
 require('dotenv').load();
 
-const db = require('./auth/db');
+const db = require('./lib/db');
 const uuid = require('uuid/v4');
 const yargs = require('yargs');
 

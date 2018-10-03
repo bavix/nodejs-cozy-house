@@ -1,6 +1,6 @@
 
 const Store = require('./store');
-const knex = require('./db');
+const knex = require('../lib/db');
 
 module.exports = async (ctx, next) => {
     const store = new Store(ctx);
