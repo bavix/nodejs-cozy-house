@@ -1,0 +1,7 @@
+apps:
+- script: bin/www
+  instances: 4
+  exec_mode: cluster
+
+- script: enqueue.js
+  watch: true
