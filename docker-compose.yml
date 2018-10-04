@@ -33,10 +33,16 @@ services:
     build:
       context: ./docker/app
     depends_on:
-      - postgresql
-      - clickhouse
-      - rabbitmq
-      - js_build
+    - postgresql
+    - clickhouse
+    - rabbitmq
+    - js_build
+    volumes:
+    - ./:/var/www/app
+
+  cli:
+    working_dir: /var/www/app
+    image: node:10-alpine
     volumes:
       - ./:/var/www/app
 
