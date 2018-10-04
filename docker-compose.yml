@@ -27,7 +27,7 @@ services:
       - ./:/data
     command: npm ci
 
-  b01:
+  app:
     build:
       context: ./docker/app
     depends_on:
@@ -35,25 +35,6 @@ services:
       - clickhouse
       - rabbitmq
       - js_build
-    environment:
-      PORT: 3001
-    expose:
-      - 3001
-    volumes:
-      - ./:/var/www/app
-
-  b02:
-    build:
-      context: ./docker/app
-    depends_on:
-      - postgresql
-      - clickhouse
-      - rabbitmq
-      - js_build
-    environment:
-      PORT: 3002
-    expose:
-      - 3002
     volumes:
       - ./:/var/www/app
 
