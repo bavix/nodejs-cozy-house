@@ -20,7 +20,7 @@ class Store {
     flush(callback) {
         this.items = [];
 
-        if (callback) {
+        if (typeof callback === "function") {
             callback(this);
         }
     }

@@ -11,7 +11,7 @@ module.exports = (store, route, consume) => {
         // signals
         process.once('SIGTERM', terminate);
         process.once('SIGINT', terminate);
-        process.once('SIGHUP', store.flush.bind(store));
+        process.once('SIGHUP', store.flush);
 
         return conn.createChannel().then(function (ch) {
 

@@ -22,7 +22,9 @@ module.exports = (route, workload) => {
                 return ch.close();
             });
 
-        }).finally(conn.close.bind(conn));
+        }).finally(() => {
+            conn.close()
+        });
         
     });
 
