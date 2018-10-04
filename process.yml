@@ -2,6 +2,9 @@ apps:
 - script: bin/www
   instances: 4
   exec_mode: cluster
+  max_memory_restart: 100M
 
 - script: enqueue.js
   watch: true
+  max_memory_restart: 200M
+  kill_timeout: 600

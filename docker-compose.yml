@@ -41,8 +41,7 @@ services:
   nginx:
     image: nginx:latest
     depends_on:
-      - b01
-      - b02
+      - app
     ports:
       - 3333:80
     volumes:
