@@ -5,4 +5,4 @@ RUN npm install pm2@latest -g
 
 WORKDIR /var/www/app
 
-CMD ["pm2-runtime", "start", "process.yml"]
+CMD ["pm2-runtime", "process.yml"]
