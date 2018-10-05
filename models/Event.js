@@ -39,7 +39,13 @@ class Event {
     }
 
     _request(body) {
-        this.target = this._ctx.state.appTarget;
+        // loading
+        const [target, device] = this._ctx.state.appTarget.split(':');
+
+        // set target & device
+        this.target = target;
+        this.event_device = device;
+
         this.request_method = this._ctx.method;
         this.request_language = this._ctx.acceptsLanguages().shift();
         this.request_secure = this._ctx.secure;
@@ -77,7 +83,6 @@ class Event {
     }
 
     _event(body) {
-        this.event_device = null;
         this.event_category = null;
         this.event_action = null;
         this.event_label = null;
@@ -85,7 +90,6 @@ class Event {
         this.event_json = null;
 
         const allow = [
-            'device',
             'category',
             'action',
             'label',

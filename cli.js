@@ -7,22 +7,29 @@ const knex = require('./lib/db');
 const uuid = require('uuid/v4');
 const yargs = require('yargs');
 
-yargs.command('$0 <name>', 'Utility to add target (get API key)', (yargs) => {
+yargs.command('$0 <name> <device>', 'Utility to add target (get API key)', (yargs) => {
     yargs.positional('name', {
         describe: 'The name of the target',
         type: 'string'
-    })
-}, async ({ name }) => {
+    });
+
+    yargs.positional('device', {
+        describe: 'Need to determine where the request came from',
+        type: 'string',
+        choices: ['server', 'browser', 'ios', 'android']
+    });
+}, async ({ name, device }) => {
+    const key = name + ':' + device;
     await knex('targets')
         .select('name', 'token')
-        .where({name})
+        .where({name: key})
         .first()
         .then(async (row) => {
             if (row) {
                 console.log(row);
             } else {
                 await knex('targets')
-                    .insert({name, token: uuid()})
+                    .insert({name: key, token: uuid()})
                     .returning(['name', 'token'])
                     .then(([row]) => console.log(row))
                     .catch(console.error);
