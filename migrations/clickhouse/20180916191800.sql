@@ -78,12 +78,6 @@ CREATE TABLE IF NOT EXISTS events (
   consumer_ppid Int16,
   consumer_pid Int16,
 
-  event_device Enum8(
-    'server' = 0,
-    'browser' = 1,
-    'ios' = 2,
-    'android' = 3
-  ),
   event_category String,
   event_action String,
   event_label Nullable(String),
