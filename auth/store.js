@@ -53,7 +53,7 @@ class Store {
 
     save(appTarget) {
         this.appTarget = appTarget;
-        data[this.token] = new Cache(120 * 1000, this.appTarget);
+        data[this.token] = new Cache(process.env.CACHE_TTL * 1000, this.appTarget);
     }
 
     unauthorized() {
