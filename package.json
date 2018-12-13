@@ -1,7 +1,6 @@
 {
-  "name": "analytics",
-  "version": "0.0.1",
-  "private": true,
+  "name": "cozy-house",
+  "version": "0.9.1",
   "scripts": {
     "start": "node ./bin/www"
   },
