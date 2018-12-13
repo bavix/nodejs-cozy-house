@@ -1,5 +1,5 @@
 apps:
-- script: bin/www
+- script: bin/www.js
   exec_mode: cluster
   max_memory_restart: 100M
 
