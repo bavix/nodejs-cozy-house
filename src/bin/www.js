@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { createServer } from '../library/server'
-import { env } from '../library/env'
 import { logger } from '../library/logger'
+import { env } from '../library/env'
 
 createServer().then(
   app =>
