@@ -1,5 +1,5 @@
 import { connect } from 'amqplib'
-import { env } from 'env'
+import { env } from './env'
 
 /**
  * @param options

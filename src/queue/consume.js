@@ -1,5 +1,7 @@
-const queue = require('./amqp')
+const queue = require('../library/amqp')
 
 export default (route, consume) => {
-  return queue().then(conn => {})
+  return queue()
+    .then(conn => {})
+    .catch(console.log)
 }

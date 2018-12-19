@@ -11,20 +11,15 @@ const timeout = env.QUEUE_TIMEOUT
  * @return {Promise<any | never>}
  */
 export default (route, workload) => {
-  return queue({ timeout }).then(function(conn) {
-    return conn
-      .createChannel()
-      .then(function(ch) {
-        return ch.assertQueue(route, { durable: true }).then(() => {
-          ch.sendToQueue(route, Buffer.from(workload.toString()), {
-            deliveryMode: true
-          })
-
-          return ch.close()
+  return queue({ timeout }).then(conn => {
+    return conn.createChannel().then(function(ch) {
+      return ch.assertQueue(route, { durable: true }).then(() => {
+        ch.sendToQueue(route, Buffer.from(workload.toString()), {
+          deliveryMode: true
         })
+
+        return ch.close()
       })
-      .finally(() => {
-        conn.close()
-      })
+    })
   })
 }

@@ -1,4 +1,6 @@
-import { logger } from '../library/logger'
+import dispatch from '../library/dispatch'
+import { env } from '../library/env'
+// import Entity from '../dict/entity'
 
 /**
  * Adding an event to the queue
@@ -6,26 +8,15 @@ import { logger } from '../library/logger'
  * @param ctx
  */
 export default ctx => {
-  // const entity = new Event(ctx);
-  // entity.recipient();
-
-  // if (!entity.validate()) {
-  //     ctx.throw(400);
-  // }
-
-  // // write to queue
-  // return dispatch(enqueue, entity).then(() => {
-  //     ctx.status = 202;
-  //     ctx.body = {
-  //         message: 'Accepted'
-  //     };
-  // }).catch((err) => {
-  //     ctx.throw(504);
-  // });
-
-  logger.debug('Hello World')
-
-  ctx.throw(202, {
-    message: 'Accepted'
-  })
+  // const entity = new Entity(ctx)
+  return dispatch(env.QUEUE_NAME, 'Hello World')
+    .then(res => {
+      ctx.status = 202
+      ctx.body = {
+        message: 'Accepted'
+      }
+    })
+    .catch(res => {
+      ctx.throw(504)
+    })
 }

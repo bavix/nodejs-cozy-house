@@ -31,19 +31,7 @@ export default {
   route: {
     type: String
   },
-  domain: {
-    type: String
-  },
   url: {
-    type: String
-  },
-  ip: {
-    type: String
-  },
-  bot: {
-    type: Boolean
-  },
-  userAgent: {
     type: String
   }
 }

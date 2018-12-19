@@ -1,7 +1,12 @@
-import Visitor from './visitor'
-import Event from './event'
+import Schema from 'validate'
+import visitor from './visitor'
+import request from './request'
+import event from './event'
 
 export default {
+  target: {
+    type: String
+  },
   googleClientId: {
     type: String
   },
@@ -23,12 +28,7 @@ export default {
   sessionId: {
     type: String
   },
-  event: {
-    type: Event,
-    required: true
-  },
-  visitor: {
-    type: Visitor,
-    required: true
-  }
+  event: new Schema(event),
+  visitor: new Schema(visitor),
+  request: new Schema(request)
 }

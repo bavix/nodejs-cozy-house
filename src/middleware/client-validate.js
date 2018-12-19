@@ -8,7 +8,7 @@ export default rules => {
   /**
    * @type {exports.default}
    */
-  const schema = new Schema(rules)
+  const schema = new Schema(rules, { typecast: true })
 
   /**
    * @param ctx

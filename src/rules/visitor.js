@@ -1,6 +1,6 @@
 export default {
   userId: {
-    type: String
+    type: Number
   },
   uuid: {
     type: String
