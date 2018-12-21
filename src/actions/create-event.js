@@ -1,6 +1,6 @@
 import dispatch from '../library/dispatch'
 import { env } from '../library/env'
-// import Entity from '../dict/entity'
+import bugger from '../library/bagger'
 
 /**
  * Adding an event to the queue
@@ -8,15 +8,14 @@ import { env } from '../library/env'
  * @param ctx
  */
 export default ctx => {
-  // const entity = new Entity(ctx)
-  return dispatch(env.QUEUE_NAME, 'Hello World')
-    .then(res => {
+  return dispatch(env.QUEUE_NAME, bugger.pack(ctx))
+    .then(() => {
       ctx.status = 202
       ctx.body = {
         message: 'Accepted'
       }
     })
-    .catch(res => {
+    .catch(() => {
       ctx.throw(504)
     })
 }

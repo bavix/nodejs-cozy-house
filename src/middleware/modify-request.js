@@ -3,6 +3,29 @@ import moment from 'moment'
 import Referrer from 'referer-parser'
 import get from 'lodash/get'
 import recipient from '../dict/recipient'
+import common from '../defaults/common'
+import request from '../defaults/request'
+import visitor from '../defaults/visitor'
+import event from '../defaults/event'
+
+const defaults = ctx => {
+  ctx.request.body = {
+    ...common(ctx),
+    ...ctx.request.body
+  }
+  ctx.request.body.request = {
+    ...request(ctx),
+    ...(ctx.request.body.request || {})
+  }
+  ctx.request.body.visitor = {
+    ...visitor(ctx),
+    ...(ctx.request.body.visitor || {})
+  }
+  ctx.request.body.event = {
+    ...event(ctx),
+    ...(ctx.request.body.event || {})
+  }
+}
 
 const modifyTime = ctx => {
   const now = moment()
@@ -33,10 +56,11 @@ const modifyRecipient = ctx => {
 /**
  * @return {Function}
  */
-export default async (ctx, next) => {
+export default (ctx, next) => {
+  defaults(ctx)
   modifyTime(ctx)
   modifyReferrer(ctx)
   modifyRecipient(ctx)
   logger.debug(ctx.request.body)
-  await next()
+  return next()
 }

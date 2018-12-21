@@ -13,7 +13,7 @@ export default {
   gclid: {
     type: String
   },
-  ym_client_id: {
+  ymClientId: {
     type: String
   },
   ymclid: {
