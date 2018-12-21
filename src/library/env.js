@@ -16,3 +16,15 @@ export const env = yenv('env.yaml', {
   logBeforeThrow: message => logger.error(message),
   envObject: local()
 })
+
+export default {
+  get(key, defaultValue) {
+    if (key === undefined) {
+      return env
+    }
+    return env[key] ? env[key] : defaultValue
+  },
+  equal(key, value) {
+    return this.get(key) === value
+  }
+}
