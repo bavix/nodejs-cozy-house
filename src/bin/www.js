@@ -6,8 +6,10 @@ import { env } from '../library/env'
 createServer().then(
   app =>
     app.listen(env.PORT, () => {
-      const mode = env.NODE_ENV
-      logger.debug(`Server listening on ${env.PORT} in ${mode} mode`)
+      logger.debug('Server started', {
+        port: env.PORT,
+        mode: env.NODE_ENV
+      })
     }),
   err => {
     logger.error('Error while starting up server', err)

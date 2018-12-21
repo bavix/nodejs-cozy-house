@@ -32,7 +32,6 @@
     "koa": "^2.5.3",
     "koa-body": "^4.0.6",
     "koa-compose": "^4.1.0",
-    "koa-isajax": "^1.0.5",
     "koa-json": "^2.0.2",
     "koa-router": "^7.4.0",
     "lockfile": "^1.0.4",

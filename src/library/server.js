@@ -1,6 +1,5 @@
 import * as http from 'http'
 
-import isAjax from 'koa-isajax'
 import cors from '@koa/cors'
 import body from 'koa-body'
 import json from 'koa-json'
@@ -17,7 +16,6 @@ export async function createServer() {
   logger.debug('Creating server...')
   const app = new Koa()
 
-  app.use(isAjax())
   app.use(body())
   app.use(cors())
   app.use(json({ pretty: false }))
@@ -38,6 +36,5 @@ export async function createServer() {
     logger.debug('Server closing, bye!')
   })
 
-  logger.debug('Server created, ready to listen', { scope: 'startup' })
   return server
 }

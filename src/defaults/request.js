@@ -3,12 +3,12 @@ export default ctx => {
     method: null,
     language: null,
     secure: ctx.secure,
-    ajax: ctx.state.xhr,
+    ajax: 0,
     route: null,
     domain: null,
     url: null,
     ip: ctx.ip,
-    bot: false,
+    bot: 0,
     userAgent: ctx.get('user-agent')
   }
 }
