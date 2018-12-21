@@ -1,8 +1,12 @@
+import msgpack5 from 'msgpack5'
+
+const msg = msgpack5()
+
 export default {
   pack(ctx) {
-    return JSON.stringify(ctx.request.body)
+    return msg.encode(ctx.request.body)
   },
   unpack(pack) {
-    return JSON.parse(pack)
+    return msg.decode(pack)
   }
 }
