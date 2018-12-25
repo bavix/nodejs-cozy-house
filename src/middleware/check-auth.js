@@ -12,6 +12,17 @@ const getToken = ctx => {
   return null
 }
 
+const getTarget = ctx => {
+  const token = getToken(ctx)
+  if (!token) {
+    return null
+  }
+
+  return Target.query()
+    .where('token', token)
+    .first()
+}
+
 const modify = (target, ctx) => {
   const { event } = ctx.request.body
   ctx.request.body.target = target.app
@@ -24,9 +35,7 @@ const modify = (target, ctx) => {
  * @return {Promise<void>}
  */
 export default async (ctx, next) => {
-  const target = await Target.query()
-    .where('token', getToken(ctx))
-    .first()
+  const target = await getTarget(ctx)
 
   if (!target) {
     ctx.throw(401, {
