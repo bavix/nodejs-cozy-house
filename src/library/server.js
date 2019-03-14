@@ -16,8 +16,9 @@ export async function createServer() {
   logger.debug('Creating server...')
   const app = new Koa()
 
-  app.use(body())
   app.use(cors())
+  app.use(errorHandle)
+  app.use(body({ jsonStrict: false }))
   app.use(json({ pretty: false }))
 
   /**
@@ -26,7 +27,6 @@ export async function createServer() {
   app.proxy = true
 
   // middleware
-  app.use(errorHandle)
   app.use(apiRoute.allowedMethods())
   app.use(apiRoute.routes())
   app.use(pageNotFound)

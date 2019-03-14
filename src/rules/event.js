@@ -14,6 +14,6 @@ export default {
     type: Number
   },
   json: {
-    type: String
+    type: Object
   }
 }

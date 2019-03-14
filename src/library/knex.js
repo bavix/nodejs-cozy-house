@@ -2,7 +2,7 @@ import Knex from 'knex'
 import { env } from './env'
 
 const knex = Knex({
-  client: 'pg',
+  client: env.DATABASE_CLIENT,
   connection: {
     host: env.DATABASE_HOST,
     port: env.DATABASE_PORT,
