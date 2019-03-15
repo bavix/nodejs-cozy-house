@@ -1,6 +1,6 @@
 import Target from '../models/target'
 import { REGEX_UUID } from '../consts'
-import mc from '../library/memcached'
+import mc from '../library/mc'
 
 const getToken = ctx => {
   const { header } = ctx.request
@@ -28,7 +28,9 @@ const getTarget = async ctx => {
       .where({ token })
       .first()
 
-    await mc.set(key, target)
+    if (target) {
+      await mc.set(key, target)
+    }
   }
 
   return target

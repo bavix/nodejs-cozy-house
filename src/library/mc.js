@@ -1,4 +1,4 @@
-import mc from './low-memcached'
+import mc from './low-mc'
 
 export default {
   get(key) {

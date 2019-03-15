@@ -4,16 +4,15 @@ import env from './env'
 
 const mc = new Memcached(['127.0.0.1:11211'], {
   timeout: 50,
-  retries: 0,
-  failures: 0,
-  retry: 0
+  minTimeout: 1,
+  maxTimeout: 1000
 })
 
-const memcachedGet = promisify(mc.get).bind(mc)
-const memcachedSet = promisify(mc.set).bind(mc)
+const get = promisify(mc.get).bind(mc)
+const set = promisify(mc.set).bind(mc)
 
 export default {
-  get: memcachedGet,
-  set: memcachedSet,
+  get,
+  set,
   ttl: env.get('CACHE_TTL', 120)
 }
