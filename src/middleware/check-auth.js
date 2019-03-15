@@ -1,5 +1,6 @@
 import Target from '../models/target'
 import { REGEX_UUID } from '../consts'
+import mc from '../library/memcached'
 
 const getToken = ctx => {
   const { header } = ctx.request
@@ -13,15 +14,24 @@ const getToken = ctx => {
   return null
 }
 
-const getTarget = ctx => {
+const getTarget = async ctx => {
   const token = getToken(ctx)
   if (!token) {
     return null
   }
 
-  return Target.query()
-    .where('token', token)
-    .first()
+  const key = `target_${token}`
+  let target = await mc.get(key)
+
+  if (!target) {
+    target = await Target.query()
+      .where({ token })
+      .first()
+
+    await mc.set(key, target)
+  }
+
+  return target
 }
 
 const modify = (target, ctx) => {
