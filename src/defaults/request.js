@@ -3,7 +3,7 @@ export default ctx => {
     method: null,
     language: null,
     secure: ctx.secure,
-    ajax: 0,
+    ajax: ctx.request.get('X-Requested-With') === 'XMLHttpRequest',
     route: null,
     domain: null,
     url: null,
