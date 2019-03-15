@@ -22,10 +22,16 @@ class Target extends Model {
     }
   }
 
+  /**
+   * @return {String}
+   */
   get app() {
     return this.name.split(':').shift()
   }
 
+  /**
+   * @return {String}
+   */
   get device() {
     return this.name.split(':').pop()
   }

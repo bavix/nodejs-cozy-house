@@ -1,12 +1,8 @@
-import { Bristol } from 'bristol'
-import palin from 'palin'
-import path from 'path'
 import env from './env'
+import { createLogger, format, transports } from 'winston'
 
-export const logger = new Bristol()
-
-if (!env.equal('LOG_LEVEL', 'off')) {
-  logger.addTarget('console').withFormatter(palin, {
-    rootFolderName: path.basename(process.cwd())
-  })
-}
+export const logger = createLogger({
+  level: env.get('LOG_LEVEL', 'info'),
+  format: format.combine(format.splat(), format.simple()),
+  transports: [new transports.Console()]
+})
