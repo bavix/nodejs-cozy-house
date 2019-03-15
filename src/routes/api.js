@@ -13,7 +13,7 @@ const router = new Router({ prefix: '/api' })
 
 // event adding route
 router.post(
-  '/event',
+  '/events',
   compose([ClientValidate(client), CheckAuth, ModifyRequest]),
   createEvent
 )
