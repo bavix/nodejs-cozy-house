@@ -14,6 +14,7 @@ export default (route, workload) => {
   return queue({ timeout }).then(conn => {
     return conn.createChannel().then(function(ch) {
       return ch.assertQueue(route, { durable: true }).then(() => {
+        /** global: Buffer */
         ch.sendToQueue(route, Buffer.from(workload.toString()), {
           deliveryMode: true
         })
