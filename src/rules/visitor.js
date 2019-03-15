@@ -1,10 +1,12 @@
+import { REGEX_UUID } from '../consts'
+
 export default {
   userId: {
     type: Number
   },
   uuid: {
     type: String,
-    match: /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+    match: REGEX_UUID,
     message: {
       match: path => `${path} must be of type UUID.`
     }

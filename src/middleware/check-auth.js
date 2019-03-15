@@ -1,10 +1,11 @@
 import Target from '../models/target'
+import { REGEX_UUID } from '../consts'
 
 const getToken = ctx => {
   const { header } = ctx.request
   if (header && header.authorization) {
     const [type, token] = header.authorization.split(' ')
-    if (type === 'Bearer') {
+    if (type === 'Bearer' && token.match(REGEX_UUID)) {
       return token
     }
   }
