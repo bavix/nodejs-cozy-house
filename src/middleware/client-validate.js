@@ -60,14 +60,14 @@ export default rules => {
       if (events.hasOwnProperty(index)) {
         const _errors = validate(ctx, events[index], index)
         if (_errors) {
-          errors.push(_errors)
+          errors.push(..._errors)
         }
       }
     }
 
     if (errors.length) {
       ctx.throw(422, {
-        message: { errors: [].concat(...errors) }
+        message: { errors }
       })
     }
 
