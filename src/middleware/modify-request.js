@@ -14,25 +14,23 @@ const defaults = ctx => {
   const dataEvent = event(ctx)
 
   for (const key in ctx.request.body) {
-    if (!ctx.request.body.hasOwnProperty(key)) {
-      continue
-    }
-
-    ctx.request.body[key] = {
-      ...dataCommon,
-      ...ctx.request.body[key]
-    }
-    ctx.request.body[key].request = {
-      ...dataRequest,
-      ...(ctx.request.body[key].request || {})
-    }
-    ctx.request.body[key].visitor = {
-      ...dataVisitor,
-      ...(ctx.request.body[key].visitor || {})
-    }
-    ctx.request.body[key].event = {
-      ...dataEvent,
-      ...(ctx.request.body[key].event || {})
+    if (ctx.request.body.hasOwnProperty(key)) {
+      ctx.request.body[key] = {
+        ...dataCommon,
+        ...ctx.request.body[key]
+      }
+      ctx.request.body[key].request = {
+        ...dataRequest,
+        ...(ctx.request.body[key].request || {})
+      }
+      ctx.request.body[key].visitor = {
+        ...dataVisitor,
+        ...(ctx.request.body[key].visitor || {})
+      }
+      ctx.request.body[key].event = {
+        ...dataEvent,
+        ...(ctx.request.body[key].event || {})
+      }
     }
   }
 }
