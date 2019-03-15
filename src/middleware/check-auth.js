@@ -24,9 +24,12 @@ const getTarget = ctx => {
 }
 
 const modify = (target, ctx) => {
-  const { event } = ctx.request.body
-  ctx.request.body.target = target.app
-  event.device = target.device
+  const app = target.app
+  const device = target.device
+  for (let data of ctx.request.body) {
+    data.target = app
+    data.event.device = device
+  }
 }
 
 /**
