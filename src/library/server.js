@@ -1,7 +1,7 @@
 import * as http from 'http'
 
 import cors from '@koa/cors'
-import body from 'koa-body'
+import body from 'koa-bodyparser'
 import json from 'koa-json'
 import Koa from 'koa'
 
@@ -23,7 +23,7 @@ export async function createServer() {
   app.use(errorHandle)
 
   logger.debug('Add Body')
-  app.use(body({ jsonStrict: false }))
+  app.use(body())
 
   logger.debug('Add JSON')
   app.use(json({ pretty: false }))
