@@ -1,4 +1,4 @@
-export default ctx => {
+export default () => {
   return {
     label: null,
     value: null,

@@ -8,6 +8,10 @@ import bugger from '../library/bagger'
  * @param ctx
  */
 export default ctx => {
+  // add req-data
+  // add req-meta
+  // add client-ip
+
   return dispatch(env.QUEUE_NAME, bugger.pack(ctx))
     .then(() => {
       ctx.status = 202
