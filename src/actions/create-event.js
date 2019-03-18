@@ -9,7 +9,7 @@ import moment from 'moment'
  * @param ctx
  */
 export default ctx => {
-  const now = moment().now()
+  const now = moment()
   const createdDate = now.format('YYYY-MM-DD')
   const createdTime = now.format('YYYY-MM-DD H:mm:ss')
 
