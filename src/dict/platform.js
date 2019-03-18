@@ -1,11 +1,11 @@
 import Platform from 'platform'
 
 /**
- * @param {String} userAgent
+ * @param {Object} meta
  * @return {Object}
  */
-export default userAgent => {
-  const platform = Platform.parse(userAgent)
+export default meta => {
+  const platform = Platform.parse(meta.userAgent)
   return {
     name: platform.name,
     version: platform.version,

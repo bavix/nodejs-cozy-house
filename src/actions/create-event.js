@@ -1,6 +1,7 @@
 import dispatch from '../library/dispatch'
 import { env } from '../library/env'
 import bugger from '../library/bagger'
+import moment from 'moment'
 
 /**
  * Adding an event to the queue
@@ -8,9 +9,15 @@ import bugger from '../library/bagger'
  * @param ctx
  */
 export default ctx => {
+  const now = moment().now()
+  const createdDate = now.format('YYYY-MM-DD')
+  const createdTime = now.format('YYYY-MM-DD H:mm:ss')
+
   const workload = {
     data: ctx.request.body,
     meta: {
+      createdDate,
+      createdTime,
       ajax: ctx.request.get('X-Requested-With') === 'XMLHttpRequest',
       userAgent: ctx.get('user-agent'),
       secure: ctx.secure,
