@@ -20,6 +20,7 @@ export default ctx => {
       createdTime,
       ajax: ctx.request.get('X-Requested-With') === 'XMLHttpRequest',
       userAgent: ctx.get('user-agent'),
+      referer: ctx.get('Referer'),
       secure: ctx.secure,
       ip: ctx.ip
     }
