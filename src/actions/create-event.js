@@ -8,11 +8,17 @@ import bugger from '../library/bagger'
  * @param ctx
  */
 export default ctx => {
-  // add req-data
-  // add req-meta
-  // add client-ip
+  const workload = {
+    data: ctx.request.body,
+    meta: {
+      ajax: ctx.request.get('X-Requested-With') === 'XMLHttpRequest',
+      userAgent: ctx.get('user-agent'),
+      secure: ctx.secure,
+      ip: ctx.ip
+    }
+  }
 
-  return dispatch(env.QUEUE_NAME, bugger.pack(ctx))
+  return dispatch(env.QUEUE_ENQUEUE, bugger.pack(workload))
     .then(() => {
       ctx.status = 202
       ctx.body = {

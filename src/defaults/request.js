@@ -1,14 +1,14 @@
-export default ctx => {
+export default meta => {
   return {
     method: null,
     language: null,
-    secure: ctx.secure,
-    ajax: ctx.request.get('X-Requested-With') === 'XMLHttpRequest',
+    secure: meta.secure,
+    ajax: meta.ajax,
     route: null,
     domain: null,
     url: null,
-    ip: ctx.ip,
+    ip: meta.ip,
     bot: 0,
-    userAgent: ctx.get('user-agent')
+    userAgent: meta.userAgent
   }
 }

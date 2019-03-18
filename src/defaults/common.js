@@ -1,4 +1,4 @@
-export default () => {
+export default meta => {
   return {
     pageLoadTime: 0,
     sessionId: null,

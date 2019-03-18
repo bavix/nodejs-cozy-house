@@ -53,7 +53,7 @@ const modify = (target, ctx) => {
 export default async (ctx, next) => {
   const target = await getTarget(ctx)
 
-  if (!target) {
+  if (!target || !target.active) {
     ctx.throw(401, {
       message: 'Unauthorized'
     })

@@ -1,4 +1,4 @@
-export default ctx => {
+export default meta => {
   return {
     userId: null,
     uuid: null,
