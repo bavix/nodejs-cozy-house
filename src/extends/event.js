@@ -33,7 +33,7 @@ const defaults = (events, meta) => {
   }
 }
 
-const modifyReferrer = (events, meta) => {
+const referrer = (events, meta) => {
   for (const data of events) {
     const ref = new Referrer(meta.referer || '', get(data, 'request.url', null))
 
@@ -50,6 +50,6 @@ const modifyReferrer = (events, meta) => {
 
 export default (data, meta) => {
   defaults(data, meta)
-  modifyReferrer(data, meta)
+  referrer(data, meta)
   return data
 }

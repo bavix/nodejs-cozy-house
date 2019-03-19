@@ -1,3 +1,5 @@
+import consumer from '../dict/consumer'
+
 export default meta => {
   return {
     pageLoadTime: 0,
@@ -11,6 +13,7 @@ export default meta => {
     utmMedium: null,
     utmTerm: null,
     utmContent: null,
-    utmCampaign: null
+    utmCampaign: null,
+    consumer: consumer(meta)
   }
 }
