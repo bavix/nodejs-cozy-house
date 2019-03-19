@@ -37,15 +37,6 @@ const getTarget = async ctx => {
   return target
 }
 
-const modify = (target, ctx) => {
-  const app = target.app
-  const device = target.device
-  for (let data of ctx.request.body) {
-    data.target = app
-    data.event.device = device
-  }
-}
-
 /**
  * @param ctx
  * @param next
@@ -54,13 +45,19 @@ const modify = (target, ctx) => {
 export default async (ctx, next) => {
   const target = await getTarget(ctx).catch(e => {
     logger.debug(e)
-    ctx.throw(504)
+    ctx.throw(503)
   })
 
   if (!target || !target.active) {
     ctx.throw(401)
   }
 
-  modify(target, ctx)
+  const app = target.app
+  const device = target.device
+  for (let data of ctx.request.body) {
+    data.target = app
+    data.event.device = device
+  }
+
   await next()
 }
