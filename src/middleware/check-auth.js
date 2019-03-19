@@ -1,6 +1,7 @@
 import Target from '../models/target'
 import { REGEX_UUID } from '../consts'
 import mc from '../library/mc'
+import { logger } from '../library/logger'
 
 const getToken = ctx => {
   const { header } = ctx.request
@@ -51,12 +52,13 @@ const modify = (target, ctx) => {
  * @return {Promise<void>}
  */
 export default async (ctx, next) => {
-  const target = await getTarget(ctx)
+  const target = await getTarget(ctx).catch(e => {
+    logger.debug(e)
+    ctx.throw(504)
+  })
 
   if (!target || !target.active) {
-    ctx.throw(401, {
-      message: 'Unauthorized'
-    })
+    ctx.throw(401)
   }
 
   modify(target, ctx)
