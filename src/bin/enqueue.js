@@ -13,9 +13,6 @@ amqp(env.QUEUE_ENQUEUE, function(queue, message) {
   const { data, meta } = bagger.unpack(message.content.toString())
   const store = processing(data, meta)
 
-  console.log(meta)
-  console.log(store)
-
   dispatch(env.QUEUE_HANDLER, bagger.pack(store)).then(() => {
     this.ack(message)
   })

@@ -9,7 +9,7 @@ export default rules => {
   /**
    * @type {exports.default}
    */
-  const schema = new Schema(rules, { typecast: false })
+  const payloadSchema = new Schema(rules, { typecast: false })
 
   /**
    * validation of each event
@@ -19,7 +19,7 @@ export default rules => {
    * @param {String} prefix
    */
   const validate = (ctx, event, prefix) => {
-    const validate = schema.validate(event)
+    const validate = payloadSchema.validate(event, { strip: false })
 
     if (validate.length > 0) {
       const message = []

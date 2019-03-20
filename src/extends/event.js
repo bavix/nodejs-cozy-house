@@ -27,7 +27,7 @@ const defaults = (events, meta) => {
       }
       events[key].event = {
         ...dataEvent,
-        ...(events[key].event || {})
+        ...events[key].event
       }
     }
   }
