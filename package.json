@@ -14,7 +14,9 @@
   },
   "scripts": {
     "enqueue_start": "cross-env NODE_ENV=production node dist/bin/enqueue.js",
+    "bulk_start": "cross-env NODE_ENV=production node dist/bin/enqueue.js",
     "enqueue_dev": "nodemon src/bin/enqueue.js",
+    "bulk_dev": "nodemon src/bin/bulk.js",
     "start": "cross-env NODE_ENV=production node dist/bin/www.js",
     "build": "rimraf dist && cross-env NODE_ENV=production babel src -d dist -s",
     "prod": "npm run build && npm run start",
