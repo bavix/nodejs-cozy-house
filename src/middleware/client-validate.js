@@ -1,5 +1,8 @@
 import Schema from 'validate'
 import env from '../library/env'
+import get from 'lodash/get'
+import set from 'lodash/set'
+import clone from 'lodash/clone'
 
 /**
  * @param {Object} rules
@@ -19,7 +22,13 @@ export default rules => {
    * @param {String} prefix
    */
   const validate = (ctx, event, prefix) => {
-    const validate = payloadSchema.validate(event, { strip: false })
+    let json = get(event, 'event.json', null)
+    if (json) {
+      json = clone(json)
+    }
+
+    const validate = payloadSchema.validate(event)
+    set(event, 'event.json', json)
 
     if (validate.length > 0) {
       const message = []
