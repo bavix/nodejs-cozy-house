@@ -3,6 +3,8 @@ import bagger from '../library/bagger'
 import { env } from '../library/env'
 import amqp from '../queue/consume'
 
+let store = []
+
 // process.once('SIGTERM', _sigterm(conn));
 // process.once('SIGINT', _sigint(conn));
 // process.once('SIGHUP', _sighup(conn));
@@ -12,11 +14,9 @@ amqp(env.QUEUE_HANDLER, function(queue, message) {
     return null
   }
 
-  const events = bagger.unpack(message.content.toString())
-
-  for (const event of events) {
-    console.log(event)
-  }
-
+  const unpack = bagger.unpack(message.content.toString())
+  store.push(...unpack)
   this.ack(message)
+
+  console.log(`store length: ${store.length}`)
 })
