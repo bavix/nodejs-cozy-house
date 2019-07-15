@@ -19,7 +19,7 @@
     "koa-json": "^2.0.2",
     "koa-router": "^7.4.0",
     "lockfile": "^1.0.4",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.14",
     "pg": "^7.11.0",
     "platform": "^1.3.5",
     "referer-parser": "^0.0.3",
