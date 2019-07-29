@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@apla/clickhouse": "^1.6.0",
-    "amqplib": "^0.5.2",
+    "amqplib": "^0.5.4",
     "date-and-time": "^0.8.1",
     "dotenv": "^8.0.0",
     "glob": "^7.1.4",
