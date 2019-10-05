@@ -5,7 +5,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "@apla/clickhouse": "^1.6.0",
+    "@apla/clickhouse": "^1.6.1",
     "amqplib": "^0.5.5",
     "date-and-time": "^0.10.0",
     "dotenv": "^8.1.0",
