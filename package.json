@@ -8,7 +8,7 @@
     "@apla/clickhouse": "^1.6.1",
     "amqplib": "^0.5.5",
     "date-and-time": "^0.10.0",
-    "dotenv": "^8.1.0",
+    "dotenv": "^8.2.0",
     "glob": "^7.1.4",
     "ip": "^1.1.5",
     "isbot": "^2.4.2",
