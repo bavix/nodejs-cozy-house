@@ -54,7 +54,7 @@ export default async (ctx, next) => {
 
   const app = target.app
   const device = target.device
-  for (let data of ctx.request.body) {
+  for (const data of ctx.request.body) {
     data.target = app
     data.event.device = device
   }

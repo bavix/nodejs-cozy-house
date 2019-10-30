@@ -6,7 +6,7 @@ import bagger from '../library/bagger'
 import { env } from '../library/env'
 import amqp from '../queue/consume'
 
-let store = []
+const store = []
 
 process.once('SIGTERM', sigterm(store))
 process.once('SIGINT', sigint(store))

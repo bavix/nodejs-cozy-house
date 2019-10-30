@@ -3,6 +3,7 @@ import env from '../library/env'
 import get from 'lodash/get'
 import set from 'lodash/set'
 import clone from 'lodash/clone'
+import has from 'lodash/has'
 
 /**
  * @param {Object} rules
@@ -64,9 +65,9 @@ export default rules => {
       })
     }
 
-    let errors = []
+    const errors = []
     for (const index in events) {
-      if (events.hasOwnProperty(index)) {
+      if (has(events, index)) {
         const _errors = validate(ctx, events[index], index)
         if (_errors) {
           errors.push(..._errors)

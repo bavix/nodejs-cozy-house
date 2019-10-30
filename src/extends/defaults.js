@@ -2,6 +2,7 @@ import common from '../defaults/common'
 import request from '../defaults/request'
 import visitor from '../defaults/visitor'
 import event from '../defaults/event'
+import has from 'lodash/has'
 
 export default (events, meta) => {
   const dataCommon = common(meta)
@@ -10,7 +11,7 @@ export default (events, meta) => {
   const dataEvent = event(meta)
 
   for (const key in events) {
-    if (events.hasOwnProperty(key)) {
+    if (has(events, key)) {
       events[key] = {
         ...dataCommon,
         ...events[key]
