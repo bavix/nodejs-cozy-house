@@ -2,3 +2,5 @@
 node_modules/
 .env
 vendor/
+dist/
+local.yaml

@@ -1,0 +1,12 @@
+export default meta => {
+  return {
+    userId: null,
+    uuid: null,
+    browserWidth: null,
+    browserHeight: null,
+    deviceWidth: null,
+    deviceHeight: null,
+    device: null,
+    deviceOrientation: null
+  }
+}
