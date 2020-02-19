@@ -17,7 +17,7 @@
     "koa-body": "^4.1.1",
     "koa-isajax": "^1.0.5",
     "koa-json": "^2.0.2",
-    "koa-router": "^8.0.7",
+    "koa-router": "^8.0.8",
     "lockfile": "^1.0.4",
     "lodash": "^4.17.15",
     "pg": "^7.18.1",
